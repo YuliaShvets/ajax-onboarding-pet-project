@@ -1,14 +1,11 @@
-package ua.lviv.iot.parkingServer;
+package ua.lviv.iot.parkingServer
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 
 @SpringBootApplication
-public class ParkingServerApplication {
+class ParkingServerApplication
 
-    public static void main(String[] args) {
-
-        SpringApplication.run(ParkingServerApplication.class, args);
-    }
-
+fun main(args: Array<String>) {
+    runApplication<ParkingServerApplication>(*args)
 }

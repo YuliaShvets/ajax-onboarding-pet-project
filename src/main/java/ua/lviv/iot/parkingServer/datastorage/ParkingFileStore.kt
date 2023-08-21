@@ -4,10 +4,15 @@ import org.springframework.stereotype.Component
 import ua.lviv.iot.parkingServer.model.Parking
 
 @Component
-class ParkingFileStore : AbstractFIleStore<Parking>() {
-    override fun  getRecordName(): String = "parking"
+class ParkingFileStore : AbstractFileStore<Parking>() {
+    override fun getRecordName(): String = "parking"
 
     override fun convert(values: List<String>): Parking {
-        return Parking(values[0].toLong(), values[1], values[2], values[3].toInt())
+        return Parking(
+            id = values[0].toLong(),
+            location = values[1],
+            tradeNetwork = values[2],
+            countOfParkingSpots = values[3].toInt()
+        )
     }
 }

@@ -1,24 +1,25 @@
 package ua.lviv.iot.parkingServer.model
 
 import ua.lviv.iot.parkingServer.model.enums.VehicleType
+import java.time.Duration
 
 data class Vehicle(
-    var vehicleId: Long,
+    override var id: Long,
     var number: String,
     var typeOfVehicle: VehicleType,
-    var durationOfUseOfParkingSpot: Double, // in hours
+    var durationOfUseOfParkingSpot: Duration,
     var isTicketReceived: Boolean
-) : Record() {
+) : CsvData {
 
 
     override fun getHeaders(): String =
         listOf(
-            "Vehicle id",
+            "Id",
             "Number",
             "Vehicle Type",
             " Duration of use parking spot",
             "Is ticket received"
         ).joinToString(separator = ", ")
 
-    override fun toCSV(): String = "$vehicleId, $number, $typeOfVehicle, $durationOfUseOfParkingSpot, $isTicketReceived"
+    override fun toCSV(): String = "$id, $number, $typeOfVehicle, $durationOfUseOfParkingSpot, $isTicketReceived"
 }

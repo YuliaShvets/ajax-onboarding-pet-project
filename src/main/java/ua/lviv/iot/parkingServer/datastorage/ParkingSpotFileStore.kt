@@ -5,10 +5,14 @@ import ua.lviv.iot.parkingServer.model.ParkingSpot
 import ua.lviv.iot.parkingServer.model.enums.ParkingSpotSize
 
 @Component
-class ParkingSpotFileStore : AbstractFIleStore<ParkingSpot>() {
+class ParkingSpotFileStore : AbstractFileStore<ParkingSpot>() {
     override fun getRecordName(): String = "parkingSpot"
 
     override fun convert(values: List<String>): ParkingSpot {
-        return ParkingSpot(values[0].toLong(), values[1].toBoolean(), ParkingSpotSize.valueOf(values[2]))
+        return ParkingSpot(
+            id = values[0].toLong(),
+            isAvailable = values[1].toBoolean(),
+            size = ParkingSpotSize.valueOf(values[2])
+        )
     }
 }

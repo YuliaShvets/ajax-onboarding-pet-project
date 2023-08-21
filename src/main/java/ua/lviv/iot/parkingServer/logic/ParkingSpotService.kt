@@ -3,27 +3,28 @@ package ua.lviv.iot.parkingServer.logic
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.datastorage.ParkingSpotFileStore
 import ua.lviv.iot.parkingServer.model.ParkingSpot
+import java.util.concurrent.atomic.AtomicLong
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 
 @Service
 class ParkingSpotService(private val parkingSpotFileStore: ParkingSpotFileStore) {
     private val parkingSpots: MutableMap<Long, ParkingSpot> = HashMap()
-    private var index: Long = 0L
+    private var id: AtomicLong = AtomicLong(1L)
 
     fun findAllParkingSpots(): List<ParkingSpot> = ArrayList<ParkingSpot>(parkingSpots.values)
 
     fun findParkingSpotById(id: Long): ParkingSpot? = parkingSpots[id]
 
     fun addParkingSpot(parkingSpot: ParkingSpot): ParkingSpot {
-        index += 1
-        parkingSpot.parkingSpotId = index
-        parkingSpots[index] = parkingSpot
+        val newId = id.getAndIncrement()
+        parkingSpot.id = newId
+        parkingSpots[newId] = parkingSpot
         return parkingSpot
     }
 
     fun updateParkingSpot(id: Long, parkingSpot: ParkingSpot): ParkingSpot {
-        parkingSpot.parkingSpotId = id
+        parkingSpot.id = id
         parkingSpots[id] = parkingSpot
         return parkingSpot
     }
@@ -32,19 +33,11 @@ class ParkingSpotService(private val parkingSpotFileStore: ParkingSpotFileStore)
 
     @PreDestroy
     fun saveParkingSpotData() {
-        val parkingSpotList: List<ParkingSpot> = parkingSpots.values.stream().toList()
-        parkingSpotFileStore.saveRecords(parkingSpotList)
+        parkingSpotFileStore.saveDataToFile(parkingSpotFileStore, parkingSpots)
     }
 
     @PostConstruct
     fun parkingSpotDataToHashmap() {
-        val parkingSpotList: List<ParkingSpot> = parkingSpotFileStore.readRecords()
-        for (parkingSpot: ParkingSpot in parkingSpotList) {
-            index += 1
-            if (parkingSpot.parkingSpotId > index) {
-                index = parkingSpot.parkingSpotId
-            }
-            parkingSpots[parkingSpot.parkingSpotId] = parkingSpot
-        }
+        parkingSpotFileStore.loadDataToHashmap(parkingSpotFileStore, parkingSpots, id)
     }
 }
