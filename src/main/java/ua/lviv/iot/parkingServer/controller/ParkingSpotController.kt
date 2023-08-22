@@ -15,7 +15,7 @@ class ParkingSpotController(private val parkingSpotService: ParkingSpotService) 
     fun getAllParking(): List<ParkingSpot> = parkingSpotService.findAllParkingSpots()
 
     @GetMapping("/{parkingSpotId}")
-    fun getParkingSpotById(@PathVariable parkingSpotId: Long): ParkingSpot? =
+    fun getParkingSpotById(@PathVariable parkingSpotId: Long): ParkingSpot =
         parkingSpotService.findParkingSpotById(parkingSpotId)
 
     @PutMapping("/{parkingSpotId}")
@@ -23,7 +23,7 @@ class ParkingSpotController(private val parkingSpotService: ParkingSpotService) 
         parkingSpotService.updateParkingSpot(parkingSpotId, parkingSpot)
 
     @DeleteMapping("/{parkingSpotId}")
-    fun deleteParkingSpot(@PathVariable parkingSpotId: Long): ParkingSpot? =
+    fun deleteParkingSpot(@PathVariable parkingSpotId: Long): ParkingSpot =
         parkingSpotService.deleteParkingSpot(parkingSpotId)
 
 }

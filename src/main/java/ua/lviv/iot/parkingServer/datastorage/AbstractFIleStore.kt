@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
+
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
 
@@ -29,7 +30,7 @@ abstract class AbstractFileStore<T : CsvData> {
         return result
     }
 
-    fun saveRecords(records: List<T>) {
+    private fun saveRecords(records: List<T>) {
         val file = File("$RESULT_FOLDER/${getRecordName()}-${Util.getDateTodayInString()}.csv")
         OutputStreamWriter(FileOutputStream(file), StandardCharsets.UTF_8).use { writer ->
             writer.write(records[0].getHeaders() + "\n")

@@ -11,7 +11,6 @@ data class Vehicle(
     var isTicketReceived: Boolean
 ) : CsvData {
 
-
     override fun getHeaders(): String =
         listOf(
             "Id",

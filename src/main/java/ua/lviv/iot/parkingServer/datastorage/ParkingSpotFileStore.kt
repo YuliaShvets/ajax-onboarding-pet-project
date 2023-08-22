@@ -6,7 +6,7 @@ import ua.lviv.iot.parkingServer.model.enums.ParkingSpotSize
 
 @Component
 class ParkingSpotFileStore : AbstractFileStore<ParkingSpot>() {
-    override fun getRecordName(): String = "parkingSpot"
+    override fun getRecordName(): String = "parking-spot"
 
     override fun convert(values: List<String>): ParkingSpot {
         return ParkingSpot(

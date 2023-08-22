@@ -6,6 +6,7 @@ import ua.lviv.iot.parkingServer.model.Parking
 import java.util.concurrent.atomic.AtomicLong
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
+import ua.lviv.iot.parkingServer.logic.exception.EntityNotFoundException
 
 @Service
 class ParkingService(private val parkingFileStore: ParkingFileStore) {
@@ -14,7 +15,8 @@ class ParkingService(private val parkingFileStore: ParkingFileStore) {
 
     fun findAllParking(): List<Parking> = ArrayList<Parking>(parking.values)
 
-    fun findParkingById(id: Long): Parking? = parking[id]
+    fun findParkingById(id: Long): Parking =
+        parking[id] ?: throw EntityNotFoundException("Parking with id=$id not found")
 
     fun addParking(place: Parking): Parking {
         val newId = id.getAndIncrement()
@@ -29,7 +31,8 @@ class ParkingService(private val parkingFileStore: ParkingFileStore) {
         return place
     }
 
-    fun deleteParking(id: Long): Parking? = parking.remove(id)
+    fun deleteParking(id: Long): Parking =
+        parking.remove(id) ?: throw EntityNotFoundException("Parking with id=$id doesn't exist")
 
     @PreDestroy
     fun saveParkingData() {

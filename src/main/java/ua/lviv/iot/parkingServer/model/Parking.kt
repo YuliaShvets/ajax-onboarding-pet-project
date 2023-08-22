@@ -6,8 +6,7 @@ data class Parking(
     var location: String,
     var tradeNetwork: String,
     var countOfParkingSpots: Int
-) :
-    CsvData {
+) : CsvData {
 
     override fun getHeaders(): String =
         listOf("Id", "Location", "Trade Network", "Count of parking spots").joinToString(separator = ", ")

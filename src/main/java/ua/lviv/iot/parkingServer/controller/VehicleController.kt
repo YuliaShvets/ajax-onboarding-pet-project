@@ -14,13 +14,13 @@ class VehicleController(private val vehicleService: VehicleService) {
     @GetMapping
     fun getAllVehicle(): List<Vehicle> = vehicleService.findAllVehicles()
 
-    @GetMapping("/{vehicleId}")
-    fun getVehicleById(@PathVariable vehicleId: Long): Vehicle? = vehicleService.findVehicleById(vehicleId)
+    @GetMapping("/{id}")
+    fun getVehicleById(@PathVariable id: Long): Vehicle = vehicleService.findVehicleById(id)
 
-    @PutMapping("/{vehicleId}")
-    fun updateVehicle(@PathVariable vehicleId: Long, @RequestBody vehicle: Vehicle): Vehicle =
-        vehicleService.updateVehicle(vehicleId, vehicle)
+    @PutMapping("/{id}")
+    fun updateVehicle(@PathVariable id: Long, @RequestBody vehicle: Vehicle): Vehicle =
+        vehicleService.updateVehicle(id, vehicle)
 
-    @DeleteMapping("/{vehicleId}")
-    fun deleteVehicle(@PathVariable vehicleId: Long): Vehicle? = vehicleService.deleteVehicle(vehicleId)
+    @DeleteMapping("/{id}")
+    fun deleteVehicle(@PathVariable id: Long): Vehicle = vehicleService.deleteVehicle(id)
 }
