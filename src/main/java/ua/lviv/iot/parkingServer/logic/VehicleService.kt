@@ -1,5 +1,6 @@
 package ua.lviv.iot.parkingServer.logic
 
+import java.util.concurrent.ConcurrentHashMap
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.datastorage.VehicleFileStore
 import ua.lviv.iot.parkingServer.model.Vehicle
@@ -10,7 +11,7 @@ import ua.lviv.iot.parkingServer.logic.exception.EntityNotFoundException
 
 @Service
 class VehicleService(private val vehicleFileStore: VehicleFileStore) {
-    private val vehicles: MutableMap<Long, Vehicle> = HashMap()
+    private val vehicles: MutableMap<Long, Vehicle> = ConcurrentHashMap()
     private var id: AtomicLong = AtomicLong(1L)
 
     fun findAllVehicles(): List<Vehicle> = vehicles.values.toList()
