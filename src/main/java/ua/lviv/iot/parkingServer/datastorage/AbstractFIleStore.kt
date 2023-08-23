@@ -20,14 +20,13 @@ abstract class AbstractFileStore<T : CsvData> {
     }
 
     private fun readRecordsFrom(csv: File): List<T> {
-        val result: MutableList<T> = LinkedList()
-        val scanner = Scanner(csv, StandardCharsets.UTF_8)
-        if (scanner.hasNextLine()) scanner.nextLine()
-        while (scanner.hasNextLine()) {
-            val values: List<String> = scanner.nextLine().split(", ").toList()
-            result.add(convert(values))
+        return csv.useLines { sequence ->
+            sequence
+                .drop(1)
+                .map { lines -> lines.split(",") }
+                .map { lineItems -> convert(lineItems) }
+                .toList()
         }
-        return result
     }
 
     private fun saveRecords(records: List<T>) {
