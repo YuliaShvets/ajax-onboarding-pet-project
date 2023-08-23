@@ -41,8 +41,7 @@ abstract class AbstractFileStore<T : CsvData> {
     }
 
     fun <T : CsvData> loadDataToHashmap(fileStore: AbstractFileStore<T>, map: MutableMap<Long, T>, id: AtomicLong) {
-        val data = fileStore.readRecords().associateBy { max(id.getAndIncrement(), it.id) }
-        map.putAll(data)
+        map += fileStore.readRecords().associateBy { max(id.getAndIncrement(), it.id) }
     }
 
     fun <T : CsvData> saveDataToFile(fileStore: AbstractFileStore<T>, map: Map<Long, T>) {
