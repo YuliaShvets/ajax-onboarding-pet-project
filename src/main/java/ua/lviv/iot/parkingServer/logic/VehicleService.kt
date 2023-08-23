@@ -13,7 +13,7 @@ class VehicleService(private val vehicleFileStore: VehicleFileStore) {
     private val vehicles: MutableMap<Long, Vehicle> = HashMap()
     private var id: AtomicLong = AtomicLong(1L)
 
-    fun findAllVehicles(): List<Vehicle> = ArrayList<Vehicle>(vehicles.values)
+    fun findAllVehicles(): List<Vehicle> = vehicles.values.toList()
 
     fun findVehicleById(id: Long): Vehicle =
         vehicles[id] ?: throw EntityNotFoundException("Vehicle with id=$id not found")

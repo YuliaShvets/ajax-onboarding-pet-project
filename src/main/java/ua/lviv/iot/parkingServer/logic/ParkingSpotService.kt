@@ -13,7 +13,7 @@ class ParkingSpotService(private val parkingSpotFileStore: ParkingSpotFileStore)
     private val parkingSpots: MutableMap<Long, ParkingSpot> = HashMap()
     private var id: AtomicLong = AtomicLong(1L)
 
-    fun findAllParkingSpots(): List<ParkingSpot> = ArrayList<ParkingSpot>(parkingSpots.values)
+    fun findAllParkingSpots(): List<ParkingSpot> = parkingSpots.values.toList()
 
     fun findParkingSpotById(id: Long): ParkingSpot =
         parkingSpots[id] ?: throw EntityNotFoundException("Parking spot with id=$id not found")
