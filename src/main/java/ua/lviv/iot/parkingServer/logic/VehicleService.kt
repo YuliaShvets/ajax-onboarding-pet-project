@@ -1,12 +1,12 @@
 package ua.lviv.iot.parkingServer.logic
 
+import jakarta.annotation.PostConstruct
+import jakarta.annotation.PreDestroy
 import java.util.concurrent.ConcurrentHashMap
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.datastorage.VehicleFileStore
 import ua.lviv.iot.parkingServer.model.Vehicle
 import java.util.concurrent.atomic.AtomicLong
-import javax.annotation.PostConstruct
-import javax.annotation.PreDestroy
 import ua.lviv.iot.parkingServer.logic.exception.EntityNotFoundException
 
 @Service
