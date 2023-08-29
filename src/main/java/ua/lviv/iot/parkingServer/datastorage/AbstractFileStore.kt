@@ -1,20 +1,21 @@
 package ua.lviv.iot.parkingServer.datastorage
 
-import ua.lviv.iot.parkingServer.model.CsvData
-import ua.lviv.iot.parkingServer.utils.Util
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
-
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.atomic.AtomicLong
+import ua.lviv.iot.parkingServer.model.CsvData
 import kotlin.math.max
 
 abstract class AbstractFileStore<T : CsvData> {
+
     private fun readRecords(): List<T> {
-        val fileName = "$RESULT_FOLDER/${getRecordName()}-${Util.getDateTodayInString()}"
+        val fileName = "$RESULT_FOLDER/${getRecordName()}-${getDateTodayInString()}"
         return if (Files.exists(Paths.get(fileName))) readRecordsFrom(File(fileName)) else emptyList()
     }
 
@@ -29,7 +30,7 @@ abstract class AbstractFileStore<T : CsvData> {
     }
 
     private fun saveRecords(records: List<T>) {
-        val file = File("$RESULT_FOLDER/${getRecordName()}-${Util.getDateTodayInString()}.csv")
+        val file = File("$RESULT_FOLDER/${getRecordName()}-${getDateTodayInString()}.csv")
         OutputStreamWriter(FileOutputStream(file), StandardCharsets.UTF_8).use { writer ->
             writer.write(records[0].getHeaders() + "\n")
             for (record in records) {
@@ -48,7 +49,11 @@ abstract class AbstractFileStore<T : CsvData> {
     }
 
     protected abstract fun getRecordName(): String
+
     protected abstract fun convert(values: List<String>): T
+
+    private fun getDateTodayInString(): String = SimpleDateFormat("yyyy-MM-dd")
+        .format(Calendar.getInstance().time)
 
     companion object {
         const val RESULT_FOLDER = "src/main/resources"

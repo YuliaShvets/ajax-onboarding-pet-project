@@ -1,0 +1,3 @@
+Id, Number, Vehicle Type,  Duration of use parking spot, Is ticket received
+1, KC8547KN, CAR, PT6S, true
+3, AK7856MH, MOTORCYCLE, PT4S, false
