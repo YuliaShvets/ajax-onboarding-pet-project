@@ -32,6 +32,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation ("com.jerolba:jmnemohistosyne:0.2.3")
 }
 
 tasks.withType<KotlinCompile> {

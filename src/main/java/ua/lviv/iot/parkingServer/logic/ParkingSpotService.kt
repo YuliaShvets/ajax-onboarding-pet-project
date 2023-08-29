@@ -3,45 +3,53 @@ package ua.lviv.iot.parkingServer.logic
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicLong
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.datastorage.ParkingSpotFileStore
-import ua.lviv.iot.parkingServer.model.ParkingSpot
-import java.util.concurrent.atomic.AtomicLong
 import ua.lviv.iot.parkingServer.logic.exception.EntityNotFoundException
+import ua.lviv.iot.parkingServer.logic.services.interfaces.ParkingSpotServiceInterface
+import ua.lviv.iot.parkingServer.model.ParkingSpot
 
 @Service
-class ParkingSpotService(private val parkingSpotFileStore: ParkingSpotFileStore) {
+class ParkingSpotService(private val parkingSpotFileStore: ParkingSpotFileStore) : ParkingSpotServiceInterface {
     private val parkingSpots: MutableMap<Long, ParkingSpot> = ConcurrentHashMap()
     private var id: AtomicLong = AtomicLong(1L)
 
-    fun findAllParkingSpots(): List<ParkingSpot> = parkingSpots.values.toList()
 
-    fun findParkingSpotById(id: Long): ParkingSpot =
+    override fun findAllEntities(): List<ParkingSpot> = parkingSpots.values.toList()
+
+    override fun findEntityById(id: Long): ParkingSpot =
         parkingSpots[id] ?: throw EntityNotFoundException("Parking spot with id=$id not found")
 
-    fun addParkingSpot(parkingSpot: ParkingSpot): ParkingSpot {
+
+    override fun addEntity(entity: ParkingSpot): ParkingSpot {
         val newId = id.getAndIncrement()
-        parkingSpot.id = newId
-        parkingSpots[newId] = parkingSpot
-        return parkingSpot
+        entity.id = newId
+        parkingSpots[newId] = entity
+        return entity
     }
 
-    fun updateParkingSpot(id: Long, parkingSpot: ParkingSpot): ParkingSpot {
-        parkingSpot.id = id
-        parkingSpots[id] = parkingSpot
-        return parkingSpot
+
+    override fun updateEntity(id: Long, entity: ParkingSpot): ParkingSpot {
+        entity.id = id
+        parkingSpots[id] = entity
+        return entity
     }
 
-    fun deleteParkingSpot(id: Long): ParkingSpot =
+
+    override fun deleteEntity(id: Long): ParkingSpot =
         parkingSpots.remove(id) ?: throw EntityNotFoundException("Parking spot with id=$id doesn't exist")
 
+
+    @PostConstruct
+    override fun entityDataToHashMap() {
+        parkingSpotFileStore.loadDataToHashmap(parkingSpotFileStore, parkingSpots, id)
+    }
+
+
     @PreDestroy
-    fun saveParkingSpotData() {
+    override fun saveEntityData() {
         parkingSpotFileStore.saveDataToFile(parkingSpotFileStore, parkingSpots)
     }
 
-    @PostConstruct
-    fun parkingSpotDataToHashmap() {
-        parkingSpotFileStore.loadDataToHashmap(parkingSpotFileStore, parkingSpots, id)
-    }
 }

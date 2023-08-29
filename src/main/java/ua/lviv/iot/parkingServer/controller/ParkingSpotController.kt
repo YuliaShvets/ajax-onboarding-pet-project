@@ -1,29 +1,36 @@
 package ua.lviv.iot.parkingServer.controller
 
-import org.springframework.web.bind.annotation.*
-import ua.lviv.iot.parkingServer.logic.ParkingSpotService
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import ua.lviv.iot.parkingServer.logic.services.interfaces.ParkingSpotServiceInterface
 import ua.lviv.iot.parkingServer.model.ParkingSpot
 
 @RestController
 @RequestMapping("/parkingSpot")
-class ParkingSpotController(private val parkingSpotService: ParkingSpotService) {
+class ParkingSpotController(private val parkingSpotService: ParkingSpotServiceInterface) {
     @PostMapping
     fun addParkingSpot(@RequestBody parkingSpot: ParkingSpot): ParkingSpot =
-        parkingSpotService.addParkingSpot(parkingSpot)
+        parkingSpotService.addEntity(parkingSpot)
 
     @GetMapping
-    fun getAllParking(): List<ParkingSpot> = parkingSpotService.findAllParkingSpots()
+    fun getAllParking(): List<ParkingSpot> = parkingSpotService.findAllEntities()
 
     @GetMapping("/{parkingSpotId}")
     fun getParkingSpotById(@PathVariable parkingSpotId: Long): ParkingSpot =
-        parkingSpotService.findParkingSpotById(parkingSpotId)
+        parkingSpotService.findEntityById(parkingSpotId)
 
     @PutMapping("/{parkingSpotId}")
     fun updateParkingSpot(@PathVariable parkingSpotId: Long, @RequestBody parkingSpot: ParkingSpot): ParkingSpot =
-        parkingSpotService.updateParkingSpot(parkingSpotId, parkingSpot)
+        parkingSpotService.updateEntity(parkingSpotId, parkingSpot)
 
     @DeleteMapping("/{parkingSpotId}")
     fun deleteParkingSpot(@PathVariable parkingSpotId: Long): ParkingSpot =
-        parkingSpotService.deleteParkingSpot(parkingSpotId)
+        parkingSpotService.deleteEntity(parkingSpotId)
 
 }

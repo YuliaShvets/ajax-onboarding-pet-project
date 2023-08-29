@@ -3,45 +3,53 @@ package ua.lviv.iot.parkingServer.logic
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicLong
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.datastorage.VehicleFileStore
-import ua.lviv.iot.parkingServer.model.Vehicle
-import java.util.concurrent.atomic.AtomicLong
 import ua.lviv.iot.parkingServer.logic.exception.EntityNotFoundException
+import ua.lviv.iot.parkingServer.logic.services.interfaces.VehicleServiceInterface
+import ua.lviv.iot.parkingServer.model.Vehicle
 
 @Service
-class VehicleService(private val vehicleFileStore: VehicleFileStore) {
+class VehicleService(private val vehicleFileStore: VehicleFileStore) : VehicleServiceInterface {
     private val vehicles: MutableMap<Long, Vehicle> = ConcurrentHashMap()
     private var id: AtomicLong = AtomicLong(1L)
 
-    fun findAllVehicles(): List<Vehicle> = vehicles.values.toList()
 
-    fun findVehicleById(id: Long): Vehicle =
+    override fun findAllEntities(): List<Vehicle> = vehicles.values.toList()
+
+    override fun findEntityById(id: Long): Vehicle =
         vehicles[id] ?: throw EntityNotFoundException("Vehicle with id=$id not found")
 
-    fun addVehicle(vehicle: Vehicle): Vehicle {
+
+    override fun addEntity(entity: Vehicle): Vehicle {
         val newId = id.getAndIncrement()
-        vehicle.id = newId
-        vehicles[newId] = vehicle
-        return vehicle
+        entity.id = newId
+        vehicles[newId] = entity
+        return entity
     }
 
-    fun updateVehicle(id: Long, vehicle: Vehicle): Vehicle {
-        vehicle.id = id
-        vehicles[id] = vehicle
-        return vehicle
+
+    override fun updateEntity(id: Long, entity: Vehicle): Vehicle {
+        entity.id = id
+        vehicles[id] = entity
+        return entity
     }
 
-    fun deleteVehicle(id: Long): Vehicle =
+
+    override fun deleteEntity(id: Long): Vehicle =
         vehicles.remove(id) ?: throw EntityNotFoundException("Vehicle with id=$id doesn't exist")
 
+
+    @PostConstruct
+    override fun entityDataToHashMap() {
+        vehicleFileStore.loadDataToHashmap(vehicleFileStore, vehicles, id)
+    }
+
+
     @PreDestroy
-    fun saveVehicleData() {
+    override fun saveEntityData() {
         vehicleFileStore.saveDataToFile(vehicleFileStore, vehicles)
     }
 
-    @PostConstruct
-    fun vehicleDataToHashmap() {
-        vehicleFileStore.loadDataToHashmap(vehicleFileStore, vehicles, id)
-    }
 }

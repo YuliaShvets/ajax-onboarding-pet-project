@@ -1,27 +1,34 @@
 package ua.lviv.iot.parkingServer.controller
 
 
-import org.springframework.web.bind.annotation.*
-import ua.lviv.iot.parkingServer.logic.ParkingService
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import ua.lviv.iot.parkingServer.logic.services.interfaces.ParkingServiceInterface
 import ua.lviv.iot.parkingServer.model.Parking
 
 @RestController
 @RequestMapping("/parking")
-class ParkingController(private val parkingService: ParkingService) {
+class ParkingController(private val parkingService: ParkingServiceInterface) {
     @PostMapping
-    fun addParking(@RequestBody parking: Parking): Parking = parkingService.addParking(parking)
+    fun addParking(@RequestBody parking: Parking): Parking = parkingService.addEntity(parking)
 
     @GetMapping
-    fun getAllParking(): List<Parking> = parkingService.findAllParking()
+    fun getAllParking(): List<Parking> = parkingService.findAllEntities()
 
     @GetMapping("/{parkingId}")
-    fun getParkingById(@PathVariable parkingId: Long): Parking = parkingService.findParkingById(parkingId)
+    fun getParkingById(@PathVariable parkingId: Long): Parking = parkingService.findEntityById(parkingId)
 
     @PutMapping("/{parkingId}")
     fun updateParking(@PathVariable parkingId: Long, @RequestBody place: Parking): Parking =
-        parkingService.updateParking(parkingId, place)
+        parkingService.updateEntity(parkingId, place)
 
     @DeleteMapping("/{parkingId}")
-    fun deleteParking(@PathVariable parkingId: Long): Parking? = parkingService.deleteParking(parkingId)
+    fun deleteParking(@PathVariable parkingId: Long): Parking? = parkingService.deleteEntity(parkingId)
 
 }
