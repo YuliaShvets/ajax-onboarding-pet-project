@@ -1,7 +1,7 @@
 package ua.lviv.iot.parkingServer.model
 
-import ua.lviv.iot.parkingServer.model.enums.VehicleType
 import java.time.Duration
+import ua.lviv.iot.parkingServer.model.enums.VehicleType
 
 data class Vehicle(
     override var id: Long,

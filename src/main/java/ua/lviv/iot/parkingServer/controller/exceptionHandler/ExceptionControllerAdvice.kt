@@ -4,8 +4,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import ua.lviv.iot.parkingServer.logic.exception.EntityNotFoundException
-import ua.lviv.iot.parkingServer.logic.exception.message.ErrorMessageModel
+import ua.lviv.iot.parkingServer.exception.EntityNotFoundException
 
 @ControllerAdvice
 class ExceptionControllerAdvice {
@@ -19,3 +18,8 @@ class ExceptionControllerAdvice {
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
 }
+
+class ErrorMessageModel(
+    var status: Int = 0,
+    var message: String = ""
+)
