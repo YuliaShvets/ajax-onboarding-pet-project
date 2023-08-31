@@ -1,9 +1,9 @@
 package ua.lviv.iot.parkingServer.service
 
+import jakarta.annotation.PostConstruct
+import jakarta.annotation.PreDestroy
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
-import javax.annotation.PostConstruct
-import javax.annotation.PreDestroy
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.annotation.TrackMetrics
 import ua.lviv.iot.parkingServer.datastorage.ParkingFileStore
