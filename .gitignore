@@ -4,22 +4,18 @@ target
 
 # Log file
 *.log
-
+*.jar
 # BlueJ files
 *.ctxt
-.gradle
 .idea
+.gradle
 ParkingServer.iml
-gradlew.bat
 build
-gradlew
-gradle
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
