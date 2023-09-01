@@ -4,10 +4,11 @@ target
 
 # Log file
 *.log
-
+*.jar
 # BlueJ files
 *.ctxt
 .idea
+.gradle
 ParkingServer.iml
 build
 # Mobile Tools for Java (J2ME)
