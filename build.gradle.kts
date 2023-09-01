@@ -34,6 +34,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation(kotlin("stdlib-jdk8"))
     implementation ("io.github.microutils:kotlin-logging-jvm:2.0.11")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 }
 
 tasks.withType<KotlinCompile> {
