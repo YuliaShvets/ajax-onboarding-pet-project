@@ -5,7 +5,6 @@ import jakarta.annotation.PreDestroy
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import org.springframework.stereotype.Service
-import ua.lviv.iot.parkingServer.datastorage.ParkingSpotFileStore
 import ua.lviv.iot.parkingServer.exception.EntityNotFoundException
 import ua.lviv.iot.parkingServer.model.ParkingSpot
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingSpotServiceInterface

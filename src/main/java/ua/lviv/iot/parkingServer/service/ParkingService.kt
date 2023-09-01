@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import org.springframework.stereotype.Service
 import ua.lviv.iot.parkingServer.annotation.TrackMetrics
-import ua.lviv.iot.parkingServer.datastorage.ParkingFileStore
 import ua.lviv.iot.parkingServer.exception.EntityNotFoundException
 import ua.lviv.iot.parkingServer.model.Parking
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
