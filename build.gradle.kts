@@ -35,6 +35,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation ("io.github.microutils:kotlin-logging-jvm:2.0.11")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.mongodb:mongodb-jdbc:2.0.3")
 }
 
 tasks.withType<KotlinCompile> {
