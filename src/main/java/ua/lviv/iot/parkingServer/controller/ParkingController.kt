@@ -28,6 +28,6 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
         parkingService.updateEntity(parkingId, place)
 
     @DeleteMapping("/{parkingId}")
-    fun deleteParking(@PathVariable parkingId: Long): Parking = parkingService.deleteEntity(parkingId)
+    fun deleteParking(@PathVariable parkingId: Long) = parkingService.deleteEntity(parkingId)
 
 }

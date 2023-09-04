@@ -29,5 +29,5 @@ class VehicleController(private val vehicleService: VehicleServiceInterface) {
         vehicleService.updateEntity(id, vehicle)
 
     @DeleteMapping("/{id}")
-    fun deleteVehicle(@PathVariable id: Long): Vehicle = vehicleService.deleteEntity(id)
+    fun deleteVehicle(@PathVariable id: Long) = vehicleService.deleteEntity(id)
 }
