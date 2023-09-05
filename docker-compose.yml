@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   mongo:
     image: mongo
@@ -13,5 +14,6 @@ services:
       - "27017:27017"
     volumes:
       - mongodb:/data/db
+
 volumes:
   mongodb:
