@@ -23,9 +23,9 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
     @GetMapping("/{parkingId}")
     fun getParkingById(@PathVariable parkingId: String): Parking = parkingService.findEntityById(parkingId)
 
-    @PutMapping("/{parkingId}")
-    fun updateParking(@PathVariable parkingId: String, @RequestBody place: Parking): Parking =
-        parkingService.updateEntity(parkingId, place)
+    @PutMapping
+    fun updateParking(@RequestBody place: Parking): Parking =
+        parkingService.updateEntity(place)
 
     @DeleteMapping("/{parkingId}")
     fun deleteParking(@PathVariable parkingId: String) = parkingService.deleteEntity(parkingId)

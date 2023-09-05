@@ -24,9 +24,9 @@ class VehicleController(private val vehicleService: VehicleServiceInterface) {
     @GetMapping("/{id}")
     fun getVehicleById(@PathVariable id: String): Vehicle = vehicleService.findEntityById(id)
 
-    @PutMapping("/{id}")
-    fun updateVehicle(@PathVariable id: String, @RequestBody vehicle: Vehicle): Vehicle =
-        vehicleService.updateEntity(id, vehicle)
+    @PutMapping
+    fun updateVehicle(@RequestBody vehicle: Vehicle): Vehicle =
+        vehicleService.updateEntity(vehicle)
 
     @DeleteMapping("/{id}")
     fun deleteVehicle(@PathVariable id: String) = vehicleService.deleteEntity(id)
