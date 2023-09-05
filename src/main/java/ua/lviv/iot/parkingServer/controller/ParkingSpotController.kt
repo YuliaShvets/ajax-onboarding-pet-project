@@ -22,15 +22,15 @@ class ParkingSpotController(private val parkingSpotService: ParkingSpotServiceIn
     fun getAllParking(): List<ParkingSpot> = parkingSpotService.findAllEntities()
 
     @GetMapping("/{parkingSpotId}")
-    fun getParkingSpotById(@PathVariable parkingSpotId: Long): ParkingSpot =
+    fun getParkingSpotById(@PathVariable parkingSpotId: String): ParkingSpot =
         parkingSpotService.findEntityById(parkingSpotId)
 
     @PutMapping("/{parkingSpotId}")
-    fun updateParkingSpot(@PathVariable parkingSpotId: Long, @RequestBody parkingSpot: ParkingSpot): ParkingSpot =
+    fun updateParkingSpot(@PathVariable parkingSpotId: String, @RequestBody parkingSpot: ParkingSpot): ParkingSpot =
         parkingSpotService.updateEntity(parkingSpotId, parkingSpot)
 
     @DeleteMapping("/{parkingSpotId}")
-    fun deleteParkingSpot(@PathVariable parkingSpotId: Long) =
+    fun deleteParkingSpot(@PathVariable parkingSpotId: String) =
         parkingSpotService.deleteEntity(parkingSpotId)
 
 }

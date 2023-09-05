@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository
 import ua.lviv.iot.parkingServer.model.ParkingSpot
 
 @Repository
-interface ParkingSpotMongoRepository : MongoRepository<ParkingSpot, Long>
+interface ParkingSpotMongoRepository : MongoRepository<ParkingSpot, String>

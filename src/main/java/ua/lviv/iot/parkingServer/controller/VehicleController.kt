@@ -22,12 +22,12 @@ class VehicleController(private val vehicleService: VehicleServiceInterface) {
     fun getAllVehicle(): List<Vehicle> = vehicleService.findAllEntities()
 
     @GetMapping("/{id}")
-    fun getVehicleById(@PathVariable id: Long): Vehicle = vehicleService.findEntityById(id)
+    fun getVehicleById(@PathVariable id: String): Vehicle = vehicleService.findEntityById(id)
 
     @PutMapping("/{id}")
-    fun updateVehicle(@PathVariable id: Long, @RequestBody vehicle: Vehicle): Vehicle =
+    fun updateVehicle(@PathVariable id: String, @RequestBody vehicle: Vehicle): Vehicle =
         vehicleService.updateEntity(id, vehicle)
 
     @DeleteMapping("/{id}")
-    fun deleteVehicle(@PathVariable id: Long) = vehicleService.deleteEntity(id)
+    fun deleteVehicle(@PathVariable id: String) = vehicleService.deleteEntity(id)
 }
