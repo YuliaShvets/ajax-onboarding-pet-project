@@ -7,20 +7,21 @@ import ua.lviv.iot.parkingServer.model.Vehicle
 import ua.lviv.iot.parkingServer.service.interfaces.VehicleServiceInterface
 
 @Service
-class VehicleService(private val vehicleMongoRepository: VehicleMongoRepository) : VehicleServiceInterface {
+class VehicleService(
+    private val vehicleMongoRepository: VehicleMongoRepository
+) : VehicleServiceInterface {
     override fun findAllEntities(): List<Vehicle> = vehicleMongoRepository.findAll()
 
-    override fun findEntityById(id: Long): Vehicle =
+    override fun findEntityById(id: String): Vehicle =
         vehicleMongoRepository.findById(id).orElseThrow { EntityNotFoundException("Vehicle with id=$id not found") }
 
     override fun addEntity(entity: Vehicle): Vehicle = vehicleMongoRepository.save(entity)
 
-    override fun updateEntity(id: Long, entity: Vehicle): Vehicle {
+    override fun updateEntity(id: String, entity: Vehicle): Vehicle {
         entity.id = findEntityById(id).id
-        addEntity(entity)
         return addEntity(entity)
     }
 
-    override fun deleteEntity(id: Long) = vehicleMongoRepository.deleteById(id)
+    override fun deleteEntity(id: String): Unit = vehicleMongoRepository.deleteById(id)
 
 }

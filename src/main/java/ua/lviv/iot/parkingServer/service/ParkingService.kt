@@ -9,20 +9,20 @@ import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 
 @TrackMetrics
 @Service
-class ParkingService(private val parkingMongoRepository: ParkingMongoRepository) : ParkingServiceInterface {
+class ParkingService(
+    private val parkingMongoRepository: ParkingMongoRepository
+) : ParkingServiceInterface {
     override fun findAllEntities(): List<Parking> = parkingMongoRepository.findAll()
 
-    override fun findEntityById(id: Long): Parking = parkingMongoRepository.findById(id)
+    override fun findEntityById(id: String): Parking = parkingMongoRepository.findById(id)
         .orElseThrow { EntityNotFoundException("Parking with id=$id not found") }
 
     override fun addEntity(entity: Parking): Parking = parkingMongoRepository.save(entity)
 
-    override fun updateEntity(id: Long, entity: Parking): Parking {
+    override fun updateEntity(id: String, entity: Parking): Parking {
         entity.id = findEntityById(id).id
-        addEntity(entity)
         return addEntity(entity)
     }
 
-    override fun deleteEntity(id: Long) = parkingMongoRepository.deleteById(id)
-
+    override fun deleteEntity(id: String): Unit = parkingMongoRepository.deleteById(id)
 }
