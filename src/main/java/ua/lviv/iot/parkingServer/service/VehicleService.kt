@@ -1,32 +1,26 @@
 package ua.lviv.iot.parkingServer.service
 
 import org.springframework.stereotype.Service
-import ua.lviv.iot.parkingServer.repository.VehicleMongoRepository
+import ua.lviv.iot.parkingServer.repository.VehicleRepository
 import ua.lviv.iot.parkingServer.exception.EntityNotFoundException
 import ua.lviv.iot.parkingServer.model.Vehicle
 import ua.lviv.iot.parkingServer.service.interfaces.VehicleServiceInterface
 
 @Service
 class VehicleService(
-    private val vehicleMongoRepository: VehicleMongoRepository
+    private val vehicleRepository: VehicleRepository
 ) : VehicleServiceInterface {
-    override fun findAllEntities(): List<Vehicle> = vehicleMongoRepository.findAll()
+    override fun findAllEntities(): List<Vehicle> = vehicleRepository.findAll()
 
     override fun findEntityById(id: String): Vehicle =
-        vehicleMongoRepository.findById(id).orElseThrow { EntityNotFoundException("Vehicle with id=$id not found") }
+        vehicleRepository.findById(id).orElseThrow { EntityNotFoundException("Vehicle with id=$id not found") }
 
-    override fun addEntity(entity: Vehicle): Vehicle = vehicleMongoRepository.save(entity)
+    override fun addEntity(entity: Vehicle): Vehicle = vehicleRepository.save(entity)
 
-    override fun updateEntity(id: String, entity: Vehicle): Vehicle {
-        val updatedEntity: Vehicle =
-            vehicleMongoRepository.findById(id).orElseThrow { EntityNotFoundException("Vehicle with id=$id not found") }
-        updatedEntity.number = entity.number
-        updatedEntity.typeOfVehicle = entity.typeOfVehicle
-        updatedEntity.durationOfUseOfParkingSpot = entity.durationOfUseOfParkingSpot
-        updatedEntity.isTicketReceived = entity.isTicketReceived
-        return vehicleMongoRepository.save(updatedEntity)
+    override fun updateEntity(entity: Vehicle): Vehicle {
+        return vehicleRepository.save(entity)
     }
 
-    override fun deleteEntity(id: String): Unit = vehicleMongoRepository.deleteById(id)
+    override fun deleteEntity(id: String): Unit = vehicleRepository.deleteById(id)
 
 }
