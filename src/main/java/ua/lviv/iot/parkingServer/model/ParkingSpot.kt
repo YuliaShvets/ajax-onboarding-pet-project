@@ -6,8 +6,8 @@ import ua.lviv.iot.parkingServer.model.enums.ParkingSpotSize
 
 @Document("parking_spot")
 data class ParkingSpot(
-    var isAvailable: Boolean,
-    var size: ParkingSpotSize
+    val isAvailable: Boolean,
+    val size: ParkingSpotSize
 ) {
     @Id
     lateinit var id: String

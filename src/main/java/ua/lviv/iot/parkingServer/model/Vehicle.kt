@@ -7,10 +7,10 @@ import ua.lviv.iot.parkingServer.model.enums.VehicleType
 
 @Document("vehicle")
 data class Vehicle(
-    var number: String,
-    var typeOfVehicle: VehicleType,
-    var durationOfUseOfParkingSpot: Duration,
-    var isTicketReceived: Boolean
+    val number: String,
+    val typeOfVehicle: VehicleType,
+    val durationOfUseOfParkingSpot: Duration,
+    val isTicketReceived: Boolean
 ) {
     @Id
     lateinit var id: String
