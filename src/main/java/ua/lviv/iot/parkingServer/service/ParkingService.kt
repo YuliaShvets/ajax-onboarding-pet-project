@@ -20,8 +20,12 @@ class ParkingService(
     override fun addEntity(entity: Parking): Parking = parkingMongoRepository.save(entity)
 
     override fun updateEntity(id: String, entity: Parking): Parking {
-        entity.id = findEntityById(id).id
-        return addEntity(entity)
+        val updatedEntity: Parking =
+            parkingMongoRepository.findById(id).orElseThrow { EntityNotFoundException("Parking with id=$id not found") }
+        updatedEntity.location = entity.location
+        updatedEntity.tradeNetwork = entity.tradeNetwork
+        updatedEntity.countOfParkingSpots = entity.countOfParkingSpots
+        return parkingMongoRepository.save(updatedEntity)
     }
 
     override fun deleteEntity(id: String): Unit = parkingMongoRepository.deleteById(id)

@@ -5,9 +5,9 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("parking")
 data class Parking(
-    val location: String,
-    val tradeNetwork: String,
-    val countOfParkingSpots: Int
+    var location: String,
+    var tradeNetwork: String,
+    var countOfParkingSpots: Int
 ) {
     @Id
     lateinit var id: String

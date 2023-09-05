@@ -18,8 +18,13 @@ class VehicleService(
     override fun addEntity(entity: Vehicle): Vehicle = vehicleMongoRepository.save(entity)
 
     override fun updateEntity(id: String, entity: Vehicle): Vehicle {
-        entity.id = findEntityById(id).id
-        return addEntity(entity)
+        val updatedEntity: Vehicle =
+            vehicleMongoRepository.findById(id).orElseThrow { EntityNotFoundException("Vehicle with id=$id not found") }
+        updatedEntity.number = entity.number
+        updatedEntity.typeOfVehicle = entity.typeOfVehicle
+        updatedEntity.durationOfUseOfParkingSpot = entity.durationOfUseOfParkingSpot
+        updatedEntity.isTicketReceived = entity.isTicketReceived
+        return vehicleMongoRepository.save(updatedEntity)
     }
 
     override fun deleteEntity(id: String): Unit = vehicleMongoRepository.deleteById(id)
