@@ -30,4 +30,21 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
     @DeleteMapping("/{parkingId}")
     fun deleteParking(@PathVariable parkingId: String) = parkingService.deleteEntity(parkingId)
 
+
+    @GetMapping("/location/{location}")
+    fun findParkingByLocation(@PathVariable location: String): List<Parking> {
+        return parkingService.findParkingByLocation(location)
+    }
+
+
+    @GetMapping("/gt/{countOfParkingSpot}")
+    fun findParkingByCountOfParkingSpotsGreaterThan(@PathVariable countOfParkingSpot: Int): List<Parking> {
+        return parkingService.findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot)
+    }
+
+
+    fun updateTradeNetworkUsingFindAndModify(oldTradeNetwork: String, newTradeNetwork: String): Parking? {
+        return parkingService.updateTradeNetworkUsingFindAndModify(oldTradeNetwork, newTradeNetwork)
+    }
+
 }
