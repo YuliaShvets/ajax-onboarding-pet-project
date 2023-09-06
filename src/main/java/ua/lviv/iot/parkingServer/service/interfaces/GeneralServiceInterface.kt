@@ -9,7 +9,7 @@ interface GeneralServiceInterface<T, ID> {
 
     fun addEntity(entity: T): T
 
-    fun updateEntity(id: String, entity: T): T
+    fun updateEntity(entity: T): T
 
     fun deleteEntity(id: String)
 
