@@ -1,15 +1,7 @@
 package ua.lviv.iot.parkingServer.repository
 
+import org.springframework.data.mongodb.repository.MongoRepository
 import ua.lviv.iot.parkingServer.model.Parking
+import ua.lviv.iot.parkingServer.repository.custom.ParkingRepositoryCustom
 
-interface ParkingRepository  {
-    fun findAll(): List<Parking>
-    fun findById(id: String): Parking
-    fun save(entity: Parking): Parking
-
-    fun update(entity: Parking): Parking
-
-    fun deleteById(id: String)
-
-    fun findParkingByLocation(location : String)
-}
+interface ParkingRepository : MongoRepository<Parking, String>, ParkingRepositoryCustom
