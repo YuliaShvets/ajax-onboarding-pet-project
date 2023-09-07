@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ua.lviv.iot.parkingServer.model.Parking
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
@@ -31,12 +30,9 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
     @DeleteMapping("/{parkingId}")
     fun deleteParking(@PathVariable parkingId: String) = parkingService.deleteEntity(parkingId)
 
-
     @GetMapping("/location/{location}")
-    fun findParkingByLocation(@PathVariable location: String): List<Parking> {
-        return parkingService.findParkingByLocation(location)
-    }
-
+    fun findParkingByLocation(@PathVariable location: String): List<Parking> =
+        parkingService.findParkingByLocation(location)
 
     @GetMapping("/gt/{countOfParkingSpot}")
     fun findParkingByCountOfParkingSpotsGreaterThan(@PathVariable countOfParkingSpot: Int): List<Parking> {
