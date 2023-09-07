@@ -20,8 +20,8 @@ class ParkingService(
         return parkingRepository.findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot)
     }
 
-    override fun updateTradeNetworkUsingFindAndModify(oldTradeNetwork: String, newTradeNetwork: String): Parking? {
-        return parkingRepository.updateTradeNetworkUsingFindAndModify(oldTradeNetwork, newTradeNetwork)
+    override fun findAllByTradeNetwork(tradeNetwork: String): List<Parking> {
+        return parkingRepository.findAllByTradeNetwork(tradeNetwork)
     }
 
     override fun findAllEntities(): List<Parking> = parkingRepository.findAll()

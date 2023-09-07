@@ -8,6 +8,6 @@ interface ParkingRepositoryCustom  {
 
     fun findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot: Int) : List<Parking>
 
-    fun updateTradeNetworkUsingFindAndModify(oldTradeNetwork : String, newTradeNetwork : String) : Parking?
+    fun findAllByTradeNetwork(tradeNetwork : String) : List<Parking>
 
 }

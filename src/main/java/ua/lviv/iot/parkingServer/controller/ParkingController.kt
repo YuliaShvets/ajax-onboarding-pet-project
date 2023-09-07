@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ua.lviv.iot.parkingServer.model.Parking
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
@@ -42,9 +43,9 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
         return parkingService.findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot)
     }
 
-
-    fun updateTradeNetworkUsingFindAndModify(oldTradeNetwork: String, newTradeNetwork: String): Parking? {
-        return parkingService.updateTradeNetworkUsingFindAndModify(oldTradeNetwork, newTradeNetwork)
+    @GetMapping("/trade-network/{tradeNetwork}")
+    fun findAllByTradeNetwork(@PathVariable tradeNetwork: String): List<Parking> {
+        return parkingService.findAllByTradeNetwork(tradeNetwork)
     }
 
 }
