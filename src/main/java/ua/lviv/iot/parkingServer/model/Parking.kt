@@ -1,15 +1,14 @@
 package ua.lviv.iot.parkingServer.model
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 
+@Document("parking")
 data class Parking(
-    override var id: Long,
-    var location: String,
-    var tradeNetwork: String,
-    var countOfParkingSpots: Int
-) : CsvData {
-
-    override fun getHeaders(): String =
-        listOf("Id", "Location", "Trade Network", "Count of parking spots").joinToString(separator = ", ")
-
-    override fun toCSV(): String = "$id, $location, $tradeNetwork, $countOfParkingSpots"
+    val location: String,
+    val tradeNetwork: String,
+    val countOfParkingSpots: Int
+) {
+    @Id
+    lateinit var id: String
 }

@@ -21,13 +21,13 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
     fun getAllParking(): List<Parking> = parkingService.findAllEntities()
 
     @GetMapping("/{parkingId}")
-    fun getParkingById(@PathVariable parkingId: Long): Parking = parkingService.findEntityById(parkingId)
+    fun getParkingById(@PathVariable parkingId: String): Parking = parkingService.findEntityById(parkingId)
 
-    @PutMapping("/{parkingId}")
-    fun updateParking(@PathVariable parkingId: Long, @RequestBody place: Parking): Parking =
-        parkingService.updateEntity(parkingId, place)
+    @PutMapping
+    fun updateParking(@RequestBody place: Parking): Parking =
+        parkingService.updateEntity(place)
 
     @DeleteMapping("/{parkingId}")
-    fun deleteParking(@PathVariable parkingId: Long): Parking = parkingService.deleteEntity(parkingId)
+    fun deleteParking(@PathVariable parkingId: String) = parkingService.deleteEntity(parkingId)
 
 }
