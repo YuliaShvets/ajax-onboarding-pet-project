@@ -18,7 +18,7 @@ class ParkingSpotService(
     override fun addEntity(entity: ParkingSpot): ParkingSpot = parkingSpotRepository.save(entity)
 
     override fun updateEntity(entity: ParkingSpot): ParkingSpot {
-       return parkingSpotRepository.save(entity)
+        return parkingSpotRepository.save(entity)
     }
 
     override fun deleteEntity(id: String): Unit = parkingSpotRepository.deleteById(id)

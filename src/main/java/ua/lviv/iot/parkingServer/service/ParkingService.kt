@@ -15,7 +15,7 @@ class ParkingService(
     override fun findAllEntities(): List<Parking> = parkingRepository.findAll()
 
     override fun findEntityById(id: String): Parking = parkingRepository.findById(id)
-        .orElseThrow{ EntityNotFoundException("Parking with id=$id not found") }
+        .orElseThrow { EntityNotFoundException("Parking with id=$id not found") }
 
     override fun addEntity(entity: Parking): Parking = parkingRepository.save(entity)
 
