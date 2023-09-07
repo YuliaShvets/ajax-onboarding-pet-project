@@ -2,4 +2,10 @@ package ua.lviv.iot.parkingServer.service.interfaces
 
 import ua.lviv.iot.parkingServer.model.Parking
 
-interface ParkingServiceInterface : GeneralServiceInterface<Parking, String>
+interface ParkingServiceInterface : GeneralServiceInterface<Parking, String> {
+    fun findParkingByLocation(location: String): List<Parking>
+
+    fun findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot: Int) : List<Parking>
+
+    fun findAllByTradeNetwork(tradeNetwork: String): List<Parking>
+}

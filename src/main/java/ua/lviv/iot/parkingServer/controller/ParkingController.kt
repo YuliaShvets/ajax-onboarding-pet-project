@@ -14,6 +14,7 @@ import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 @RestController
 @RequestMapping("/parking")
 class ParkingController(private val parkingService: ParkingServiceInterface) {
+  
     @PostMapping
     fun addParking(@RequestBody parking: Parking): Parking = parkingService.addEntity(parking)
 
@@ -29,5 +30,19 @@ class ParkingController(private val parkingService: ParkingServiceInterface) {
 
     @DeleteMapping("/{parkingId}")
     fun deleteParking(@PathVariable parkingId: String) = parkingService.deleteEntity(parkingId)
+
+    @GetMapping("/location/{location}")
+    fun findParkingByLocation(@PathVariable location: String): List<Parking> =
+        parkingService.findParkingByLocation(location)
+
+    @GetMapping("/gt/{countOfParkingSpot}")
+    fun findParkingByCountOfParkingSpotsGreaterThan(@PathVariable countOfParkingSpot: Int): List<Parking> {
+        return parkingService.findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot)
+    }
+
+    @GetMapping("/trade-network/{tradeNetwork}")
+    fun findAllByTradeNetwork(@PathVariable tradeNetwork: String): List<Parking> {
+        return parkingService.findAllByTradeNetwork(tradeNetwork)
+    }
 
 }

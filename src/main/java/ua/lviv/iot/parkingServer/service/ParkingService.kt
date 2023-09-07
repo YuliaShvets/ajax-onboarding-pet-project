@@ -12,6 +12,18 @@ import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 class ParkingService(
     private val parkingRepository: ParkingRepository
 ) : ParkingServiceInterface {
+    override fun findParkingByLocation(location: String): List<Parking> {
+        return parkingRepository.findParkingByLocation(location)
+    }
+
+    override fun findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot: Int): List<Parking> {
+        return parkingRepository.findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot)
+    }
+
+    override fun findAllByTradeNetwork(tradeNetwork: String): List<Parking> {
+        return parkingRepository.findAllByTradeNetwork(tradeNetwork)
+    }
+
     override fun findAllEntities(): List<Parking> = parkingRepository.findAll()
 
     override fun findEntityById(id: String): Parking = parkingRepository.findById(id)
@@ -24,4 +36,5 @@ class ParkingService(
     }
 
     override fun deleteEntity(id: String): Unit = parkingRepository.deleteById(id)
+
 }
