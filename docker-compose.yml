@@ -15,5 +15,12 @@ services:
     volumes:
       - mongodb:/data/db
 
+  spring-boot-app:
+    build:
+      context: .  # Use the current directory as the build context
+      dockerfile: Dockerfile  # Use the Dockerfile in the current directory
+    ports:
+      - "8080:8080"
+
 volumes:
   mongodb:
