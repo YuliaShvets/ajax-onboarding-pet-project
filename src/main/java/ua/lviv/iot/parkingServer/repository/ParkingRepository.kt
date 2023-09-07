@@ -6,6 +6,4 @@ import ua.lviv.iot.parkingServer.model.Parking
 import ua.lviv.iot.parkingServer.repository.custom.ParkingRepositoryCustom
 
 @Repository
-interface ParkingRepository : MongoRepository<Parking, String>, ParkingRepositoryCustom {
-
-}
+interface ParkingRepository : MongoRepository<Parking, String>, ParkingRepositoryCustom
