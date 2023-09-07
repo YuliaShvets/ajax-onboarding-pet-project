@@ -21,6 +21,8 @@ services:
       dockerfile: Dockerfile  # Use the Dockerfile in the current directory
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_.HOST=mongo
 
 volumes:
   mongodb:

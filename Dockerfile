@@ -24,4 +24,4 @@ RUN /app/gradlew build
 EXPOSE 8080
 
 # Command to run your Spring Boot application
-CMD ["java", "-jar", "build/libs/your-spring-boot-app.jar"]
+CMD ["java", "-jar", "build/libs/ParkingServer-0.0.1-SNAPSHOT.jar"]
