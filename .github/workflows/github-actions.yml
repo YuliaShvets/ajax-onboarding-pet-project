@@ -1,4 +1,4 @@
-name: BUILD
+name:  Java with Gradle CI
 
 on:
   push:
