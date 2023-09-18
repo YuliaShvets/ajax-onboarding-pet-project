@@ -4,10 +4,12 @@ import com.example.ParkingOuterClass.ParkingRequest
 import com.example.ParkingOuterClass.ParkingResponse
 import com.google.protobuf.Parser
 import io.nats.client.Connection
+import org.springframework.stereotype.Component
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.model.Parking
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 
+@Component
 class NatsParkingDeleteController(
     private val converter: ParkingConverter,
     private val service: ParkingServiceInterface,
