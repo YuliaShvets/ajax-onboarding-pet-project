@@ -19,9 +19,8 @@ class NatsParkingUpdateController(
 
     override fun generateReplyForNatsRequest(request: ParkingOuterClass.ParkingRequest): ParkingOuterClass.ParkingResponse {
         val parking: Parking = converter.protoRequestToParking(request)
-        parking.id = subject.split(".").last()
+        parking.id = subject
         service.updateEntity(parking)
         return converter.parkingToProtoResponse(parking)
     }
-
 }

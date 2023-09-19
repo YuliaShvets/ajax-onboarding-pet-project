@@ -37,7 +37,7 @@ dependencies {
     implementation ("io.github.microutils:kotlin-logging-jvm:2.0.11")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("io.nats:jnats:2.16.14")
-    implementation("com.google.protobuf:protobuf-java:3.16.3")
+    implementation("com.google.protobuf:protobuf-java:3.19.6")
 }
 
 tasks.withType<KotlinCompile> {

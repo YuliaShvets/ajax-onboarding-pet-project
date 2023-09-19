@@ -20,8 +20,8 @@ class NatsParkingDeleteController(
 
     override fun generateReplyForNatsRequest(request: ParkingRequest): ParkingResponse {
         val parking: Parking = converter.protoRequestToParking(request)
-        parking.id = subject.split(".").last()
-        service.deleteEntity(parking.id)
+        parking.id = subject
+        service.deleteEntity(subject)
         return ParkingResponse.newBuilder().build()
     }
 
