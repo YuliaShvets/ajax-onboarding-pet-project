@@ -6,7 +6,6 @@ import com.google.protobuf.Parser
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
-import ua.lviv.iot.parkingServer.natscontroller.NatsController
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 
 @Component
