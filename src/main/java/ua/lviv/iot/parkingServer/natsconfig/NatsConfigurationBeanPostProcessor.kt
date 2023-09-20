@@ -6,7 +6,6 @@ import ua.lviv.iot.parkingServer.natscontroller.NatsController
 
 @Component
 class  NatsConfigurationBeanPostProcessor : BeanPostProcessor {
-
     override fun postProcessBeforeInitialization(bean: Any, beanName: String): Any {
         if (bean is NatsController<*, *>) {
             bean.connection.subscribe(bean.subject)

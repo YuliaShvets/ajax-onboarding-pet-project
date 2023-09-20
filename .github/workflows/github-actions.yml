@@ -1,27 +1,41 @@
-name:  Java with Gradle CI
+name: Java with Gradle CI
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - 'main'
   pull_request:
     branches:
       - '*'
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
+          java-version: '17'
 
-      - uses: actions/checkout@v3
+      - name: Create a network for Mongo
+        run: docker network create mongo_network
+
+      - name: Start mongo container
+        run: docker run -d --name mongo --network mongo_network -p 27017:27017 mongo:latest
+
+      - name: Create a network for Nats
+        run: docker network create nats_network
+
+      - name: Start nats container
+        run: docker run -d --name nats --network nats_network -p 4222:4222 nats:latest
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Run build with Gradle Wrapper
+      - name: Build with gradle
         run: ./gradlew build
