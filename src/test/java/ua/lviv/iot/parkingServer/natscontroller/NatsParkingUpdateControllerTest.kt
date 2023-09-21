@@ -1,15 +1,17 @@
 package ua.lviv.iot.parkingServer.natscontroller
 
 import com.example.ParkingOuterClass
+import com.example.ParkingOuterClass.UpdateParkingRequest
 import io.nats.client.Connection
 import java.time.Duration
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.model.Parking
+import ua.lviv.iot.parkingServer.repository.ParkingRepository
 
 @SpringBootTest
 class NatsParkingUpdateControllerTest {
@@ -20,22 +22,33 @@ class NatsParkingUpdateControllerTest {
     @Autowired
     lateinit var parkingConverter: ParkingConverter
 
+    @Autowired
+    lateinit var controller: NatsParkingUpdateController
+
+    @Autowired
+    lateinit var parkingRepository: ParkingRepository
+
+
     @Test
     fun generateReplyForNatsRequest() {
-        val parking = Parking("Kyiv", "Forum", 123)
-        val expected = ParkingOuterClass.ParkingRequest.newBuilder()
+        val parking = Parking("Kyiv", "lol", 123)
+        parkingRepository.save(parking)
+        val request = UpdateParkingRequest.newBuilder()
+            .setParkingId(parking.id)
             .setParking(parkingConverter.parkingToProto(parking))
             .build()
 
-        val future = connection.requestWithTimeout(
-            "parking.update",
-            expected.toByteArray(),
+        val response = controller.generateReplyForNatsRequest(request)
+
+        val reply = connection.requestWithTimeout(
+            NatsSubject.PARKING_UPDATE,
+            request.toByteArray(),
             Duration.ofSeconds(10)
-        )
-            .get().data
+        ).get().data
 
-        val actual = ParkingOuterClass.ParkingResponse.parseFrom(future)
-        assertThat(actual.parking).isEqualTo(expected.parking)
-
+        val receivedResponse = ParkingOuterClass.UpdateParkingResponse.parseFrom(reply)
+        assertEquals(receivedResponse, response)
+        println(parking)
+        parkingRepository.delete(parking)
     }
 }
