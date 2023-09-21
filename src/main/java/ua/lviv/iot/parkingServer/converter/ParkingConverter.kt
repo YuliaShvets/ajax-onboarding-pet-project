@@ -9,11 +9,20 @@ import ua.lviv.iot.parkingServer.model.Parking
 @Component
 class ParkingConverter {
     fun parkingToProto(parking: Parking): ParkingOuterClass.Parking {
-        return ParkingOuterClass.Parking.newBuilder()
-            .setLocation(parking.location)
-            .setTradeNetwork(parking.tradeNetwork)
-            .setCountOfParkingSpots(parking.countOfParkingSpots)
-            .build()
+        return ParkingOuterClass.Parking.newBuilder().apply {
+            location = parking.location
+            tradeNetwork = parking.tradeNetwork
+            countOfParkingSpots = parking.countOfParkingSpots
+
+        }.build()
+    }
+
+    fun protoToParking(parkingProto: ParkingOuterClass.Parking): Parking {
+        return Parking(
+            location = parkingProto.location,
+            tradeNetwork = parkingProto.tradeNetwork,
+            countOfParkingSpots = parkingProto.countOfParkingSpots
+        )
     }
 
     fun parkingToProtoResponse(

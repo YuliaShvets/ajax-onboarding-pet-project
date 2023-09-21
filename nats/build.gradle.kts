@@ -19,7 +19,6 @@ kotlin {
     jvmToolchain(17)
 }
 
-
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.20.1"
