@@ -23,3 +23,18 @@ message GetByIdParkingRequest {
 message GetByIdParkingResponse {
   Parking parking = 1;
 }
+
+message DeleteParkingRequest {
+  string parking_id = 1;
+}
+
+message DeleteParkingResponse {}
+
+message UpdateParkingRequest {
+  string parking_id = 1;
+  Parking parking = 2;
+}
+
+message UpdateParkingResponse {
+  Parking parking = 1;
+}
