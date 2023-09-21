@@ -15,7 +15,9 @@ class NatsParkingDeleteController(
     private val service: ParkingServiceInterface,
     override val connection: Connection,
 ) : NatsController<ParkingRequest, ParkingResponse> {
+
     override val subject: String = "parking.delete"
+
     override val parser: Parser<ParkingRequest> = ParkingRequest.parser()
 
     override fun generateReplyForNatsRequest(request: ParkingRequest): ParkingResponse {

@@ -30,11 +30,12 @@ class NatsParkingUpdateControllerTest {
         val future = connection.requestWithTimeout(
             "parking.update",
             expected.toByteArray(),
-            Duration.ofMillis(100000)
+            Duration.ofSeconds(10)
         )
+            .get().data
 
-        val actual = ParkingOuterClass.ParkingResponse.parseFrom(future.get().data)
-        assertThat(expected.parking).isEqualTo(actual.parking)
+        val actual = ParkingOuterClass.ParkingResponse.parseFrom(future)
+        assertThat(actual.parking).isEqualTo(expected.parking)
 
     }
 }

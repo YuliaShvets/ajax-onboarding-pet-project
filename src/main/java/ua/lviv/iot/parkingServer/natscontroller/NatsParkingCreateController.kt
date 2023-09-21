@@ -15,7 +15,9 @@ class NatsParkingCreateController(
     private val service: ParkingServiceInterface,
     override val connection: Connection
 ) : NatsController<ParkingRequest, ParkingResponse> {
+
     override val subject: String = "parking.add"
+
     override val parser: Parser<ParkingRequest> =
         ParkingRequest.parser()
 

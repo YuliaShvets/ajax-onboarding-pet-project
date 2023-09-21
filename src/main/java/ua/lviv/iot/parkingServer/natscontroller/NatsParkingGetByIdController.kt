@@ -14,7 +14,9 @@ class NatsParkingGetByIdController(
     private val service: ParkingServiceInterface,
     override val connection: Connection,
 ) : NatsController<GetByIdParkingRequest, GetByIdParkingResponse> {
+
     override val subject: String = "parking.get_by_id"
+
     override val parser: Parser<GetByIdParkingRequest> = GetByIdParkingRequest.parser()
 
     override fun generateReplyForNatsRequest(

@@ -24,13 +24,14 @@ class NatsParkingDeleteControllerTest {
         val parking = Parking("Kyiv", "Forum", 123)
         parkingRepository.save(parking)
         val sizeOfDBBefore = parkingRepository.findAll().size
-        val future = connection.requestWithTimeout(
+        connection.requestWithTimeout(
             "parking.delete",
             null,
-            Duration.ofMillis(100000)
-        )
-        future.get().data
+            Duration.ofSeconds(10)
+        ).get().data
+
         val sizeOfDBAfter = parkingRepository.findAll().size
+
         assertThat(sizeOfDBBefore).isEqualTo(sizeOfDBAfter)
 
     }

@@ -32,11 +32,11 @@ class NatsParkingCreateControllerTest {
                 .requestWithTimeout(
                     "parking.add",
                     expected.toByteArray(),
-                    Duration.ofMillis(100000)
+                    Duration.ofSeconds(10)
                 )
                 .get()
                 .data
         )
-        assertThat(expected.parking).isEqualTo(actual.parking)
+        assertThat(actual.parking).isEqualTo(expected.parking)
     }
 }

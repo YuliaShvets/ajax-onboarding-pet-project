@@ -14,7 +14,6 @@ class ParkingConverter {
             .setTradeNetwork(parking.tradeNetwork)
             .setCountOfParkingSpots(parking.countOfParkingSpots)
             .build()
-
     }
 
     fun parkingToProtoResponse(
