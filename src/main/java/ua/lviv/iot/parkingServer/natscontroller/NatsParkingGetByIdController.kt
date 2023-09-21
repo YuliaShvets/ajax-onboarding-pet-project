@@ -5,6 +5,7 @@ import com.example.ParkingOuterClass.GetByIdParkingResponse
 import com.google.protobuf.Parser
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
+import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 
@@ -15,7 +16,7 @@ class NatsParkingGetByIdController(
     override val connection: Connection,
 ) : NatsController<GetByIdParkingRequest, GetByIdParkingResponse> {
 
-    override val subject: String = "parking.get_by_id"
+    override val subject: String = NatsSubject.PARKING_GET_BY_ID
 
     override val parser: Parser<GetByIdParkingRequest> = GetByIdParkingRequest.parser()
 

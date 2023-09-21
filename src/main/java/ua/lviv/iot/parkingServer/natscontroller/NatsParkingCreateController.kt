@@ -6,6 +6,7 @@ import com.example.ParkingOuterClass.ParkingResponse
 import com.google.protobuf.Parser
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
+import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 
@@ -16,7 +17,7 @@ class NatsParkingCreateController(
     override val connection: Connection
 ) : NatsController<ParkingRequest, ParkingResponse> {
 
-    override val subject: String = "parking.add"
+    override val subject: String = NatsSubject.PARKING_ADD
 
     override val parser: Parser<ParkingRequest> =
         ParkingRequest.parser()
