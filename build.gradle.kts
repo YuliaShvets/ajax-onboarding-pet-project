@@ -25,19 +25,21 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":nats"))
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation ("io.github.microutils:kotlin-logging-jvm:2.0.11")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
     implementation(kotlin("stdlib-jdk8"))
     implementation("io.nats:jnats:2.16.14")
     implementation("com.google.protobuf:protobuf-java:3.19.6")
-    implementation(project(":nats"))
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<KotlinCompile> {
