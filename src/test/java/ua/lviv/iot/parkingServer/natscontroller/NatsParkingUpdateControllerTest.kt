@@ -48,7 +48,6 @@ class NatsParkingUpdateControllerTest {
 
         val receivedResponse = ParkingOuterClass.UpdateParkingResponse.parseFrom(reply)
         assertEquals(receivedResponse, response)
-        println(parking)
         parkingRepository.delete(parking)
     }
 }
