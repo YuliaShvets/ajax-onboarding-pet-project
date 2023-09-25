@@ -37,8 +37,6 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java:3.19.6")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
