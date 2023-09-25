@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package com.example;
+
+message Parking {
+  string location = 1;
+  string tradeNetwork = 2;
+  int32 countOfParkingSpots = 3;
+}
+
+message ParkingResponse {
+  Parking parking = 1;
+}
+
+message  ParkingRequest {
+  Parking parking = 1;
+}
+
+message GetByIdParkingRequest {
+  string parking_id = 1;
+}
+
+message GetByIdParkingResponse {
+  Parking parking = 1;
+}
+
+message DeleteParkingRequest {
+  string parking_id = 1;
+}
+
+message DeleteParkingResponse {}
+
+message UpdateParkingRequest {
+  string parking_id = 1;
+  Parking parking = 2;
+}
+
+message UpdateParkingResponse {
+  Parking parking = 1;
+}

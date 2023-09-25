@@ -1,28 +1,30 @@
-version: "3.8"
+version: "3.9"
 
 services:
   mongo:
-    image: mongo
-    container_name: mongo
-    command:
-      - --auth
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+    image: mongo:latest
     restart: unless-stopped
+    env_file: ./.env
     ports:
-      - "27017:27017"
-    volumes:
-      - mongodb:/data/db
+      - ${MONGO_LOCAL_PORT}:${MONGO_DOCKER_PORT}
 
-  spring-boot-app:
+  nats:
+    image: nats:latest
+    env_file: ./.env
+    ports:
+      - ${DEFAULT_NATS_LOCAL_PORT}:${DEFAULT_NATS_DOCKER_PORT}
+      - ${CLUSTER_NATS_LOCAL_PORT}:${CLUSTER_NATS_DOCKER_PORT}
+      - ${MONITORING_NATS_LOCAL_PORT}:${MONITORING_NATS_DOCKER_PORT}
+
+  app:
+    depends_on:
+      - mongo
+      - nats
     build:
-      context: .  # Use the current directory as the build context
-      dockerfile: Dockerfile  # Use the Dockerfile in the current directory
+      context: .
+      dockerfile: ./Dockerfile
+    env_file: ./.env
     ports:
-      - "8080:8080"
+      - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
     environment:
-      - SPRING_DATA_MONGODB_.HOST=mongo
-
-volumes:
-  mongodb:
+      - "SPRING_PROFILES_ACTIVE=docker"
