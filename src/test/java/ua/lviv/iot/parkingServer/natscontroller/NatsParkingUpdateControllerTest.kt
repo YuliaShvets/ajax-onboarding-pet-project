@@ -31,14 +31,14 @@ class NatsParkingUpdateControllerTest {
 
     @Test
     fun generateReplyForNatsRequest() {
-        val parking = Parking("Kyiv", "lol", 123)
-        parkingRepository.save(parking)
+        val parking = Parking("Kyiv", "lol", 125)
+        parkingRepository.save(parking).block()
         val request = UpdateParkingRequest.newBuilder()
             .setParkingId(parking.id)
             .setParking(parkingConverter.parkingToProto(parking))
             .build()
 
-        val response = controller.generateReplyForNatsRequest(request)
+        val response = controller.generateReplyForNatsRequest(request).block()
 
         val reply = connection.requestWithTimeout(
             NatsSubject.PARKING_UPDATE,
@@ -48,6 +48,6 @@ class NatsParkingUpdateControllerTest {
 
         val receivedResponse = ParkingOuterClass.UpdateParkingResponse.parseFrom(reply)
         assertEquals(receivedResponse, response)
-        parkingRepository.delete(parking)
+        parkingRepository.deleteById(parking.id).block()
     }
 }
