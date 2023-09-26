@@ -1,9 +1,13 @@
 package ua.lviv.iot.parkingServer.repository
 
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
 import ua.lviv.iot.parkingServer.model.Parking
-import ua.lviv.iot.parkingServer.repository.custom.ParkingRepositoryCustom
 
-@Repository
-interface ParkingRepository : MongoRepository<Parking, String>, ParkingRepositoryCustom
+interface ParkingRepository : GeneralRepository<Parking> {
+    fun findParkingByLocation(location: String): Flux<Parking>
+
+    fun findParkingByCountOfParkingSpotsGreaterThan(countOfParkingSpot: Int): Flux<Parking>
+
+    fun findAllByTradeNetwork(tradeNetwork: String): Flux<Parking>
+
+}
