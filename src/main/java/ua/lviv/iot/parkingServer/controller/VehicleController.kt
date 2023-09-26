@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import ua.lviv.iot.parkingServer.model.Vehicle
 import ua.lviv.iot.parkingServer.service.interfaces.VehicleServiceInterface
 
@@ -16,18 +18,23 @@ import ua.lviv.iot.parkingServer.service.interfaces.VehicleServiceInterface
 class VehicleController(private val vehicleService: VehicleServiceInterface) {
 
     @PostMapping
-    fun addVehicle(@RequestBody vehicle: Vehicle): Vehicle = vehicleService.addEntity(vehicle)
+    fun addVehicle(@RequestBody vehicle: Vehicle): Mono<Vehicle> = vehicleService.addEntity(vehicle)
 
     @GetMapping
-    fun getAllVehicle(): List<Vehicle> = vehicleService.findAllEntities()
+    fun getAllVehicle(): Flux<Vehicle> = vehicleService.findAllEntities()
 
     @GetMapping("/{id}")
-    fun getVehicleById(@PathVariable id: String): Vehicle = vehicleService.findEntityById(id)
+    fun getVehicleById(@PathVariable id: String): Mono<Vehicle> = vehicleService.findEntityById(id)
 
     @PutMapping
-    fun updateVehicle(@RequestBody vehicle: Vehicle): Vehicle =
+    fun updateVehicle(@RequestBody vehicle: Vehicle): Mono<Vehicle> =
         vehicleService.updateEntity(vehicle)
 
     @DeleteMapping("/{id}")
     fun deleteVehicle(@PathVariable id: String) = vehicleService.deleteEntity(id)
+
+    @GetMapping("/{number}")
+    fun findVehicleByNumber(@PathVariable number: String): Mono<Vehicle> {
+        return vehicleService.findVehicleByNumber(number)
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import ua.lviv.iot.parkingServer.model.ParkingSpot
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingSpotServiceInterface
 
@@ -15,22 +17,27 @@ import ua.lviv.iot.parkingServer.service.interfaces.ParkingSpotServiceInterface
 @RequestMapping("/parkingSpot")
 class ParkingSpotController(private val parkingSpotService: ParkingSpotServiceInterface) {
     @PostMapping
-    fun addParkingSpot(@RequestBody parkingSpot: ParkingSpot): ParkingSpot =
+    fun addParkingSpot(@RequestBody parkingSpot: ParkingSpot): Mono<ParkingSpot> =
         parkingSpotService.addEntity(parkingSpot)
 
     @GetMapping
-    fun getAllParking(): List<ParkingSpot> = parkingSpotService.findAllEntities()
+    fun getAllParking(): Flux<ParkingSpot> = parkingSpotService.findAllEntities()
 
     @GetMapping("/{parkingSpotId}")
-    fun getParkingSpotById(@PathVariable parkingSpotId: String): ParkingSpot =
+    fun getParkingSpotById(@PathVariable parkingSpotId: String): Mono<ParkingSpot> =
         parkingSpotService.findEntityById(parkingSpotId)
 
     @PutMapping
-    fun updateParkingSpot(@RequestBody parkingSpot: ParkingSpot): ParkingSpot =
+    fun updateParkingSpot(@RequestBody parkingSpot: ParkingSpot): Mono<ParkingSpot> =
         parkingSpotService.updateEntity(parkingSpot)
 
     @DeleteMapping("/{parkingSpotId}")
     fun deleteParkingSpot(@PathVariable parkingSpotId: String) =
         parkingSpotService.deleteEntity(parkingSpotId)
+
+    @GetMapping("/{isAvailable}")
+    fun findParkingSpotByAvailability(@PathVariable isAvailable: Boolean): Flux<ParkingSpot> {
+        return parkingSpotService.findParkingSpotByAvailability(isAvailable)
+    }
 
 }
