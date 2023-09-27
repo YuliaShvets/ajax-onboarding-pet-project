@@ -1,8 +1,10 @@
 package ua.lviv.iot.parkingServer.repository
 
-import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
 import ua.lviv.iot.parkingServer.model.ParkingSpot
 
-@Repository
-interface ParkingSpotRepository : MongoRepository<ParkingSpot, String>
+
+interface ParkingSpotRepository : GeneralRepository<ParkingSpot> {
+
+    fun findParkingSpotByAvailability(isAvailable : Boolean) : Flux<ParkingSpot>
+}

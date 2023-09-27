@@ -12,7 +12,7 @@ class  NatsConfigurationBeanPostProcessor : BeanPostProcessor {
             bean.connection.subscribe(bean.subject)
             val dispatcher = bean.connection.createDispatcher { message ->
                 val response = bean.handle(message)
-                bean.connection.publish(message.replyTo, response.toByteArray())
+                bean.connection.publish(message.replyTo, response.block()!!.toByteArray())
             }
             dispatcher.subscribe(bean.subject)
         }

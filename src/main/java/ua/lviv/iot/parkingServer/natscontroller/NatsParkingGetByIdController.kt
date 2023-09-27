@@ -5,6 +5,7 @@ import com.example.ParkingOuterClass.GetByIdParkingResponse
 import com.google.protobuf.Parser
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Mono
 import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
@@ -20,15 +21,15 @@ class NatsParkingGetByIdController(
 
     override val parser: Parser<GetByIdParkingRequest> = GetByIdParkingRequest.parser()
 
-    override fun generateReplyForNatsRequest(
-        request:GetByIdParkingRequest
-    ): GetByIdParkingResponse {
-        val parkingById = service.findEntityById(request.parkingId)
-        val protoParking = converter.parkingToProto(parkingById)
+    override fun generateReplyForNatsRequest(request: GetByIdParkingRequest): Mono<GetByIdParkingResponse> {
+        val parkingId = request.parkingId
 
-        return GetByIdParkingResponse
-            .newBuilder()
-            .setParking(protoParking)
-            .build()
+        return service.findEntityById(parkingId)
+            .map { converter.parkingToProto(it) }
+            .map {
+                GetByIdParkingResponse.newBuilder()
+                    .setParking(it)
+                    .build()
+            }
     }
 }

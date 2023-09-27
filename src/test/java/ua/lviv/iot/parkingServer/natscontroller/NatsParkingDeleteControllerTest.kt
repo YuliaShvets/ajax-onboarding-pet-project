@@ -23,8 +23,8 @@ class NatsParkingDeleteControllerTest {
     @Test
     fun generateReplyForNatsRequest() {
         val parking = Parking("Kyiv", "Forum", 123)
-        parkingRepository.save(parking)
-        val sizeBeforeDeletion = parkingRepository.findAll().size
+        parkingRepository.save(parking).block()
+        val sizeBeforeDeletion = parkingRepository.findAll().collectList().block()!!.size
         val request = ParkingOuterClass.DeleteParkingRequest.newBuilder()
             .setParkingId(parking.id)
             .build()
@@ -35,7 +35,8 @@ class NatsParkingDeleteControllerTest {
             Duration.ofSeconds(10)
         ).get().data
 
-        val sizeAfterDeletion = parkingRepository.findAll().size
+        val sizeAfterDeletion = parkingRepository.findAll().collectList().block()!!.size
         assertThat(sizeBeforeDeletion).isGreaterThan(sizeAfterDeletion)
     }
+
 }

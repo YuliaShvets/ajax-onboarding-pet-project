@@ -27,7 +27,7 @@ repositories {
 dependencies {
     implementation(project(":nats"))
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:3.1.2")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -35,9 +35,11 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("io.nats:jnats:2.16.14")
     implementation("com.google.protobuf:protobuf-java:3.19.6")
-
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.projectreactor:reactor-test:3.5.10")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 }
 
 tasks.withType<KotlinCompile> {
