@@ -25,10 +25,10 @@ class NatsParkingGetByIdController(
         val parkingId = request.parkingId
 
         return service.findEntityById(parkingId)
-            .map { parking ->
-                val protoParking = converter.parkingToProto(parking)
+            .map { converter.parkingToProto(it) }
+            .map {
                 GetByIdParkingResponse.newBuilder()
-                    .setParking(protoParking)
+                    .setParking(it)
                     .build()
             }
     }

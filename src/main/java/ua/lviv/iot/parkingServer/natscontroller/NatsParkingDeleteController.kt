@@ -20,7 +20,7 @@ class NatsParkingDeleteController(
     override val parser: Parser<DeleteParkingRequest> = DeleteParkingRequest.parser()
 
     override fun generateReplyForNatsRequest(request: DeleteParkingRequest): Mono<DeleteParkingResponse> {
-        service.deleteEntity(request.parkingId).block()
-        return Mono.just(DeleteParkingResponse.getDefaultInstance())
+        return service.deleteEntity(request.parkingId)
+            .thenReturn(DeleteParkingResponse.getDefaultInstance())
     }
 }

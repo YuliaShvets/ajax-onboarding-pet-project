@@ -22,21 +22,18 @@ class NatsParkingUpdateController(
         ParkingOuterClass.UpdateParkingRequest.parser()
 
     override fun generateReplyForNatsRequest(request: ParkingOuterClass.UpdateParkingRequest): Mono<ParkingOuterClass.UpdateParkingResponse> {
-        val parking =
-            converter
-                .protoToParking(request.parking)
-                .apply { id = request.parkingId }
-
         return Mono.fromCallable {
-            val createdParking = service.updateEntity(parking)
-
-            ParkingOuterClass.UpdateParkingResponse.newBuilder()
-                .setParking(
-                    converter
-                        .parkingToProto(createdParking.block()!!) // block to get the result from Mono
-                )
-                .build()
+            val parking =
+                converter
+                    .protoToParking(request.parking)
+            parking.apply { id = request.parkingId }
+        }.flatMap { updatedParking ->
+            service.updateEntity(updatedParking)
+                .map { createdParking ->
+                    ParkingOuterClass.UpdateParkingResponse.newBuilder()
+                        .setParking(converter.parkingToProto(createdParking))
+                        .build()
+                }
         }
     }
-
 }
