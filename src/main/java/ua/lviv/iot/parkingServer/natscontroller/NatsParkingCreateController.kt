@@ -1,6 +1,5 @@
 package ua.lviv.iot.parkingServer.natscontroller
 
-import ua.lviv.iot.parkingServer.model.Parking
 import com.example.ParkingOuterClass.ParkingRequest
 import com.example.ParkingOuterClass.ParkingResponse
 import com.google.protobuf.Parser
@@ -24,8 +23,7 @@ class NatsParkingCreateController(
         ParkingRequest.parser()
 
     override fun generateReplyForNatsRequest(request: ParkingRequest): Mono<ParkingResponse> {
-        val parking: Mono<Parking> = service.addEntity(converter.protoRequestToParking(request))
-        return parking
+        return service.addEntity(converter.protoRequestToParking(request))
             .map { converter.parkingToProtoResponse(it) }
     }
 }
