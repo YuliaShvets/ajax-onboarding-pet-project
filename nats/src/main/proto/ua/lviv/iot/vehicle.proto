@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+
+package com.example;
+
+enum VehicleType {
+  CAR = 0;
+  BUS = 1;
+  MOTORCYCLE = 2;
+
+}
+
+message Vehicle {
+  string number = 1;
+  VehicleType type_of_vehicle = 2;
+  google.protobuf.Duration duration_of_use_of_parking_spot = 3;
+  bool is_ticket_received = 4;
+}
+
+message VehicleRequest {
+  Vehicle vehicle = 1;
+}
+
+message VehicleResponse {
+  Vehicle vehicle = 1;
+}
+
+message GetByIdVehicleRequest {
+  string vehicle_id = 1;
+}
+
+message UpdateVehicleRequest {
+  string vehicle_id = 1;
+  Vehicle vehicle  = 2;
+}
+
+message DeleteVehicleRequest {
+  string vehicle_id = 1;
+}
+
+message DeleteVehicleResponse {}
