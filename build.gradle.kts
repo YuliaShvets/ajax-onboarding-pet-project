@@ -40,6 +40,9 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test:3.5.10")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("io.grpc:grpc-protobuf:1.58.0")
+    implementation("io.grpc:grpc-netty:1.58.0")
+    implementation("io.grpc:grpc-stub:1.58.0")
 }
 
 tasks.withType<KotlinCompile> {
