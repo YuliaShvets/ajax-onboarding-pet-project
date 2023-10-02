@@ -2,13 +2,12 @@ syntax = "proto3";
 
 import "google/protobuf/duration.proto";
 
-package com.example;
+package ua.lviv.iot;
 
 enum VehicleType {
   CAR = 0;
   BUS = 1;
   MOTORCYCLE = 2;
-
 }
 
 message Vehicle {

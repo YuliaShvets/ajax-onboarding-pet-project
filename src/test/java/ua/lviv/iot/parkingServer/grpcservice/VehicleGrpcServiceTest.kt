@@ -1,18 +1,16 @@
 package ua.lviv.iot.parkingServer.grpcservice
 
-import com.example.VehicleGrpcServiceGrpc
-import com.example.VehicleGrpcServiceGrpc.VehicleGrpcServiceBlockingStub
-import com.example.VehicleOuterClass
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import java.time.Duration
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
+import ua.lviv.iot.VehicleGrpcServiceGrpc
+import ua.lviv.iot.VehicleOuterClass
 import ua.lviv.iot.parkingServer.converter.VehicleConverter
 import ua.lviv.iot.parkingServer.model.Vehicle
 import ua.lviv.iot.parkingServer.model.enums.VehicleType
@@ -30,9 +28,29 @@ class VehicleGrpcServiceTest(
     @Autowired
     private lateinit var vehicleRepository: VehicleRepository
 
-    private lateinit var stub: VehicleGrpcServiceBlockingStub
+    private lateinit var stub: VehicleGrpcServiceGrpc.VehicleGrpcServiceBlockingStub
 
     private lateinit var channel: ManagedChannel
+
+    private lateinit var firstTestVehicle: Vehicle
+    private lateinit var secondTestVehicle: Vehicle
+
+
+    @BeforeEach
+    fun setUp() {
+        firstTestVehicle = Vehicle(
+            number = "KA6706VN",
+            typeOfVehicle = VehicleType.BUS,
+            durationOfUseOfParkingSpot = Duration.ofSeconds(3600),
+            isTicketReceived = true
+        )
+        secondTestVehicle = Vehicle(
+            number = "KA6706VW",
+            typeOfVehicle = VehicleType.BUS,
+            durationOfUseOfParkingSpot = Duration.ofSeconds(3600),
+            isTicketReceived = true
+        )
+    }
 
     @BeforeEach
     fun start() {
@@ -45,73 +63,49 @@ class VehicleGrpcServiceTest(
 
     @Test
     fun createVehicle() {
-        val vehicle = Vehicle(
-            number = "KA6706VN",
-            typeOfVehicle = VehicleType.BUS,
-            durationOfUseOfParkingSpot = Duration.ofSeconds(3600),
-            isTicketReceived = true
-        )
-
         val vehicleRequest = VehicleOuterClass.VehicleRequest.newBuilder()
-            .setVehicle(vehicleConverter.vehicleToProto(vehicle))
+            .setVehicle(vehicleConverter.vehicleToProto(firstTestVehicle))
             .build()
 
         val response = stub.createVehicle(vehicleRequest)
 
-        assertEquals("KA6706VN", response.vehicle.number)
-        assertEquals(VehicleOuterClass.VehicleType.BUS, response.vehicle.typeOfVehicle)
-        assertEquals(3600, response.vehicle.durationOfUseOfParkingSpot.seconds)
-        assertEquals(true, response.vehicle.isTicketReceived)
+        Assertions.assertThat(response.vehicle.number).isEqualTo(firstTestVehicle.number)
+        Assertions.assertThat(response.vehicle.typeOfVehicle.name).isEqualTo(firstTestVehicle.typeOfVehicle.name)
+        Assertions.assertThat(response.vehicle.durationOfUseOfParkingSpot.seconds)
+            .isEqualTo(firstTestVehicle.durationOfUseOfParkingSpot.seconds)
+        Assertions.assertThat(response.vehicle.isTicketReceived).isEqualTo(firstTestVehicle.isTicketReceived)
     }
 
     @Test
     fun getVehicleById() {
-        val vehicle = Vehicle(
-            number = "KA6706VN",
-            typeOfVehicle = VehicleType.BUS,
-            durationOfUseOfParkingSpot = Duration.ofSeconds(3600),
-            isTicketReceived = true
-        )
-        vehicleRepository.save(vehicle).block()
+        vehicleRepository.save(firstTestVehicle).block()
         val request = VehicleOuterClass.GetByIdVehicleRequest.newBuilder()
-            .setVehicleId(vehicle.id)
+            .setVehicleId(firstTestVehicle.id)
             .build()
         val response = stub.getVehicleById(request)
-        assertEquals("KA6706VN", response.vehicle.number)
-        vehicleRepository.deleteById(vehicle.id).block()
+        Assertions.assertThat(response.vehicle.number).isEqualTo("KA6706VN")
+        vehicleRepository.deleteById(firstTestVehicle.id).block()
     }
 
     @Test
     fun updateVehicle() {
-        val updatedVehicle = Vehicle(
-            number = "KA6706VW",
-            typeOfVehicle = VehicleType.BUS,
-            durationOfUseOfParkingSpot = Duration.ofSeconds(3600),
-            isTicketReceived = true
-        )
-        vehicleRepository.save(updatedVehicle).block()
+        vehicleRepository.save(secondTestVehicle).block()
         val request = VehicleOuterClass.UpdateVehicleRequest.newBuilder()
-            .setVehicleId(updatedVehicle.id)
-            .setVehicle(vehicleConverter.vehicleToProto(updatedVehicle))
+            .setVehicleId(secondTestVehicle.id)
+            .setVehicle(vehicleConverter.vehicleToProto(secondTestVehicle))
             .build()
 
         val response = stub.updateVehicle(request)
-        assertEquals("KA6706VW", response.vehicle.number)
-        vehicleRepository.deleteById(updatedVehicle.id).block()
+        Assertions.assertThat(response.vehicle.number).isEqualTo("KA6706VW")
+        vehicleRepository.deleteById(secondTestVehicle.id).block()
     }
 
     @Test
     fun deleteVehicle() {
-        val vehicle = Vehicle(
-            number = "KA6706VW",
-            typeOfVehicle = VehicleType.BUS,
-            durationOfUseOfParkingSpot = Duration.ofSeconds(3600),
-            isTicketReceived = true
-        )
-        vehicleRepository.save(vehicle).block()
+        vehicleRepository.save(secondTestVehicle).block()
         val sizeBeforeDeletion = vehicleRepository.findAll().collectList().block()!!.size
         val request = VehicleOuterClass.DeleteVehicleRequest.newBuilder()
-            .setVehicleId(vehicle.id)
+            .setVehicleId(secondTestVehicle.id)
             .build()
 
         stub.deleteVehicle(request)

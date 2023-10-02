@@ -1,9 +1,7 @@
 package ua.lviv.iot.parkingServer.converter
 
-import com.example.ParkingOuterClass
-import com.example.ParkingOuterClass.ParkingResponse
-import com.example.ParkingOuterClass.ParkingRequest
 import org.springframework.stereotype.Component
+import ua.lviv.iot.ParkingOuterClass
 import ua.lviv.iot.parkingServer.model.Parking
 
 @Component
@@ -27,13 +25,13 @@ class ParkingConverter {
 
     fun parkingToProtoResponse(
         parking: Parking
-    ): ParkingResponse {
-        return ParkingResponse.newBuilder()
+    ): ParkingOuterClass.ParkingResponse {
+        return ParkingOuterClass.ParkingResponse.newBuilder()
             .setParking(parkingToProto(parking))
             .build()
     }
 
-    fun protoRequestToParking(parkingProto: ParkingRequest): Parking {
+    fun protoRequestToParking(parkingProto: ParkingOuterClass.ParkingRequest): Parking {
         return Parking(
             location = parkingProto.parking.location,
             tradeNetwork = parkingProto.parking.tradeNetwork,

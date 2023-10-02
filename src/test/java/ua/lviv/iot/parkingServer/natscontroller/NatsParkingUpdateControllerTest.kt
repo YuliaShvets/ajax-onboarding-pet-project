@@ -1,13 +1,12 @@
 package ua.lviv.iot.parkingServer.natscontroller
 
-import com.example.ParkingOuterClass
-import com.example.ParkingOuterClass.UpdateParkingRequest
 import io.nats.client.Connection
 import java.time.Duration
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ua.lviv.iot.ParkingOuterClass
 import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.model.Parking
@@ -33,7 +32,7 @@ class NatsParkingUpdateControllerTest {
     fun generateReplyForNatsRequest() {
         val parking = Parking("Kyiv", "lol", 125)
         parkingRepository.save(parking).block()
-        val request = UpdateParkingRequest.newBuilder()
+        val request = ParkingOuterClass.UpdateParkingRequest.newBuilder()
             .setParkingId(parking.id)
             .setParking(parkingConverter.parkingToProto(parking))
             .build()
@@ -47,7 +46,7 @@ class NatsParkingUpdateControllerTest {
         ).get().data
 
         val receivedResponse = ParkingOuterClass.UpdateParkingResponse.parseFrom(reply)
-        assertEquals(receivedResponse, response)
+        Assertions.assertThat(response).isEqualTo(receivedResponse)
         parkingRepository.deleteById(parking.id).block()
     }
 }

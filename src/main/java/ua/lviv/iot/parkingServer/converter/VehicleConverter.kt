@@ -1,30 +1,25 @@
 package ua.lviv.iot.parkingServer.converter
 
-import com.example.VehicleOuterClass
 import java.time.Duration
 import org.springframework.stereotype.Component
+import ua.lviv.iot.VehicleOuterClass
 import ua.lviv.iot.parkingServer.model.Vehicle
 import ua.lviv.iot.parkingServer.model.enums.VehicleType
 
 @Component
 class VehicleConverter {
     fun vehicleToProto(vehicle: Vehicle): VehicleOuterClass.Vehicle {
-        return VehicleOuterClass.Vehicle.newBuilder()
-            .setNumber(vehicle.number)
-            .setTypeOfVehicle(
-                when (vehicle.typeOfVehicle) {
-                    VehicleType.CAR -> VehicleOuterClass.VehicleType.CAR
-                    VehicleType.BUS -> VehicleOuterClass.VehicleType.BUS
-                    VehicleType.MOTORCYCLE -> VehicleOuterClass.VehicleType.MOTORCYCLE
-                }
-            )
-            .setDurationOfUseOfParkingSpot(
-                com.google.protobuf.Duration.newBuilder()
-                    .setSeconds(vehicle.durationOfUseOfParkingSpot.seconds)
-                    .build()
-            )
-            .setIsTicketReceived(vehicle.isTicketReceived)
-            .build()
+        return VehicleOuterClass.Vehicle.newBuilder().apply {
+            number = vehicle.number
+            typeOfVehicle = when (vehicle.typeOfVehicle) {
+                VehicleType.CAR -> VehicleOuterClass.VehicleType.CAR
+                VehicleType.BUS -> VehicleOuterClass.VehicleType.BUS
+                VehicleType.MOTORCYCLE -> VehicleOuterClass.VehicleType.MOTORCYCLE
+            }
+
+            durationOfUseOfParkingSpotBuilder.setSeconds(vehicle.durationOfUseOfParkingSpot.seconds)
+            isTicketReceived = vehicle.isTicketReceived
+        }.build()
     }
 
     fun protoToVehicle(vehicleProto: VehicleOuterClass.Vehicle): Vehicle {

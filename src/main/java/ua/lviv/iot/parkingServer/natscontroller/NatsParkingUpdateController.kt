@@ -1,10 +1,10 @@
 package ua.lviv.iot.parkingServer.natscontroller
 
-import com.example.ParkingOuterClass
 import com.google.protobuf.Parser
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
+import ua.lviv.iot.ParkingOuterClass
 import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
