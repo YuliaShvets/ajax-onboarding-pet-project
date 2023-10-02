@@ -33,8 +33,8 @@ class VehicleGrpcServiceTest(
     private lateinit var channel: ManagedChannel
 
     private lateinit var firstTestVehicle: Vehicle
-    private lateinit var secondTestVehicle: Vehicle
 
+    private lateinit var secondTestVehicle: Vehicle
 
     @BeforeEach
     fun setUp() {
@@ -83,7 +83,7 @@ class VehicleGrpcServiceTest(
             .setVehicleId(firstTestVehicle.id)
             .build()
         val response = stub.getVehicleById(request)
-        Assertions.assertThat(response.vehicle.number).isEqualTo("KA6706VN")
+        Assertions.assertThat(response.vehicle.number).isEqualTo(firstTestVehicle.number)
         vehicleRepository.deleteById(firstTestVehicle.id).block()
     }
 
@@ -96,7 +96,7 @@ class VehicleGrpcServiceTest(
             .build()
 
         val response = stub.updateVehicle(request)
-        Assertions.assertThat(response.vehicle.number).isEqualTo("KA6706VW")
+        Assertions.assertThat(response.vehicle.number).isEqualTo(secondTestVehicle.number)
         vehicleRepository.deleteById(secondTestVehicle.id).block()
     }
 
