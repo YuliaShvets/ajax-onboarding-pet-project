@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.example;
+package ua.lviv.iot;
 
 message Parking {
   string location = 1;

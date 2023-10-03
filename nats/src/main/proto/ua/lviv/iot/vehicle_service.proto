@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package ua.lviv.iot;
+
+import "ua/lviv/iot/vehicle.proto";
+
+service VehicleGrpcService {
+  rpc createVehicle(VehicleRequest) returns (VehicleResponse);
+
+  rpc getVehicleById(GetByIdVehicleRequest) returns (VehicleResponse);
+
+  rpc updateVehicle(UpdateVehicleRequest) returns (VehicleResponse);
+
+  rpc deleteVehicle(DeleteVehicleRequest) returns (DeleteVehicleResponse);
+}
