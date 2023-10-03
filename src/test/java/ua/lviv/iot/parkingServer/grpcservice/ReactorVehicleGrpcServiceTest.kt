@@ -83,14 +83,11 @@ class ReactorVehicleGrpcServiceTest(
         )
         val actual = stub.createVehicle(request)
 
-        val vehicleId = firstTestVehicle.id
-
         StepVerifier.create(actual)
             .assertNext {
                 assertThat(expected.vehicle).isEqualTo(it.vehicle)
             }
             .verifyComplete()
-        vehicleRepository.deleteById(vehicleId).block()
     }
 
 
