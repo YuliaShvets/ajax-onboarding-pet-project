@@ -43,6 +43,7 @@ dependencies {
     implementation("io.grpc:grpc-protobuf:1.58.0")
     implementation("io.grpc:grpc-netty:1.58.0")
     implementation("io.grpc:grpc-stub:1.58.0")
+    testImplementation("io.projectreactor:reactor-test:3.5.10")
 }
 
 tasks.withType<KotlinCompile> {
