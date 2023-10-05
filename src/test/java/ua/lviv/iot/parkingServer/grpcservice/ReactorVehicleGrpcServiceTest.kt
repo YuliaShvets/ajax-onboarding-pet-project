@@ -1,13 +1,11 @@
 package ua.lviv.iot.parkingServer.grpcservice
 
 import io.grpc.ManagedChannel
-import io.grpc.ManagedChannelBuilder
 import java.time.Duration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
@@ -25,10 +23,7 @@ import ua.lviv.iot.parkingServer.model.enums.VehicleType
 import ua.lviv.iot.parkingServer.repository.VehicleRepository
 
 @SpringBootTest
-class ReactorVehicleGrpcServiceTest(
-    @Value("\${grpc.server.port}")
-    var grpcPort: Int
-) {
+class ReactorVehicleGrpcServiceTest {
 
     @Autowired
     private lateinit var vehicleConverter: VehicleConverter
@@ -38,6 +33,7 @@ class ReactorVehicleGrpcServiceTest(
 
     private lateinit var stub: ReactorVehicleGrpcServiceStub
 
+    @Autowired
     private lateinit var channel: ManagedChannel
 
     private lateinit var firstTestVehicle: Vehicle
@@ -63,10 +59,6 @@ class ReactorVehicleGrpcServiceTest(
 
     @BeforeEach
     fun start() {
-        channel = ManagedChannelBuilder
-            .forTarget("localhost:$grpcPort")
-            .usePlaintext()
-            .build()
         stub = ReactorVehicleGrpcServiceGrpc.newReactorStub(channel)
     }
 
