@@ -31,6 +31,21 @@ jobs:
       - name: Create a network for Nats
         run: docker network create nats_network
 
+      - name: Create a network for Kafka and ZooKeeper
+        run: docker network create kafka_network
+
+      - name: Start ZooKeeper container
+        run: docker run -d --name zookeeper --network kafka_network -p 2181:2181 confluentinc/cp-zookeeper:latest
+
+      - name: Start Kafka container
+        run: docker run -d --name kafka --network kafka_network
+          -p 9092:9092
+          -e KAFKA_ADVERTISED_HOST_NAME=localhost
+          -e KAFKA_PORT=9092
+          -e KAFKA_CREATE_TOPICS=mytopic:1:1
+          -e KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+          -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 confluentinc/cp-kafka:latest
+
       - name: Start nats container
         run: docker run -d --name nats --network nats_network -p 4222:4222 nats:latest
 

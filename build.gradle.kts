@@ -44,6 +44,8 @@ dependencies {
     implementation("io.grpc:grpc-netty:1.58.0")
     implementation("io.grpc:grpc-stub:1.58.0")
     testImplementation("io.projectreactor:reactor-test:3.5.10")
+    implementation("org.springframework.kafka:spring-kafka:3.0.11")
+    implementation("io.projectreactor.kafka:reactor-kafka:1.3.21")
 }
 
 tasks.withType<KotlinCompile> {

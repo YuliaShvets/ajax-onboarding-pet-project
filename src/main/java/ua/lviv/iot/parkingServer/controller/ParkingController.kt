@@ -15,8 +15,10 @@ import ua.lviv.iot.parkingServer.service.interfaces.ParkingServiceInterface
 
 @RestController
 @RequestMapping("/parking")
-class ParkingController(private val parkingService: ParkingServiceInterface) {
-  
+class ParkingController(
+    private val parkingService: ParkingServiceInterface
+) {
+
     @PostMapping
     fun addParking(@RequestBody parking: Parking): Mono<Parking> = parkingService.addEntity(parking)
 
