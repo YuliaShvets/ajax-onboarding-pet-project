@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package ua.lviv.iot;
+
+enum ParkingSpotSize {
+  COMPACT = 0;
+  LARGE = 1;
+  MOTORBIKE = 2;
+}
+
+message ParkingSpot {
+  bool isAvailable = 1;
+  ParkingSpotSize size = 2;
+
+}
+
+message ParkingSpotResponse {
+  ParkingSpot parkingSpot = 1;
+}
+
+message ParkingSpotRequest {
+  ParkingSpot parkingSpot = 1;
+}
+
+message GetByIdParkingSpotRequest {
+  string parkingSpot_id = 1;
+}
+
+message GetByIdParkingSpotResponse {
+  ParkingSpot parkingSpot = 1;
+}
+
+message DeleteParkingSpotRequest {
+  string parkingSpot_id = 1;
+}
+
+message DeleteParkingSpotResponse {}
+
+message UpdateParkingSpotRequest {
+  string parkingSpot_id = 1;
+  ParkingSpot parkingSpot = 2;
+}
+
+message UpdateParkingSpotResponse {
+  ParkingSpot parking = 1;
+}
