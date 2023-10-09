@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.kafka.sender.SenderResult
 import reactor.test.StepVerifier
 import ua.lviv.iot.parkingServer.converter.ParkingSpotConverter
 import ua.lviv.iot.parkingServer.model.ParkingSpot
