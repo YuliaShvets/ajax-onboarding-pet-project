@@ -15,40 +15,17 @@ class ParkingSpotConverter {
                 ParkingSpotSize.LARGE -> ParkingSpotOuterClass.ParkingSpotSize.LARGE
                 ParkingSpotSize.COMPACT -> ParkingSpotOuterClass.ParkingSpotSize.COMPACT
                 ParkingSpotSize.MOTORBIKE -> ParkingSpotOuterClass.ParkingSpotSize.MOTORBIKE
+                else -> ParkingSpotOuterClass.ParkingSpotSize.DEFAULT
             }
 
         }.build()
     }
 
-    fun protoToParkingSpot(parkingSpotProto: ParkingSpotOuterClass.ParkingSpot): ParkingSpot {
-        return ParkingSpot(
-            isAvailable = parkingSpotProto.isAvailable,
-            size = when (parkingSpotProto.size) {
-                ParkingSpotOuterClass.ParkingSpotSize.LARGE -> ParkingSpotSize.LARGE
-                ParkingSpotOuterClass.ParkingSpotSize.COMPACT -> ParkingSpotSize.COMPACT
-                ParkingSpotOuterClass.ParkingSpotSize.MOTORBIKE -> ParkingSpotSize.MOTORBIKE
-                else -> ParkingSpotSize.COMPACT
-            }
-        )
-    }
-
     fun parkingSpotToProtoResponse(
         parkingSpot: ParkingSpot
-    ): ParkingSpotOuterClass.ParkingSpotResponse {
-        return ParkingSpotOuterClass.ParkingSpotResponse.newBuilder()
+    ): ParkingSpotOuterClass.CreateParkingSpotResponse {
+        return ParkingSpotOuterClass.CreateParkingSpotResponse.newBuilder()
             .setParkingSpot(parkingSpotToProto(parkingSpot))
             .build()
-    }
-
-    fun protoRequestToParkingSpot(parkingSpotProto: ParkingSpotOuterClass.ParkingSpotRequest): ParkingSpot {
-        return ParkingSpot(
-            isAvailable = parkingSpotProto.parkingSpot.isAvailable,
-            size = when (parkingSpotProto.parkingSpot.size) {
-                ParkingSpotOuterClass.ParkingSpotSize.LARGE -> ParkingSpotSize.LARGE
-                ParkingSpotOuterClass.ParkingSpotSize.COMPACT -> ParkingSpotSize.COMPACT
-                ParkingSpotOuterClass.ParkingSpotSize.MOTORBIKE -> ParkingSpotSize.MOTORBIKE
-                else -> ParkingSpotSize.COMPACT
-            }
-        )
     }
 }

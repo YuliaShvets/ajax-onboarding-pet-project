@@ -15,6 +15,7 @@ class VehicleConverter {
                 VehicleType.CAR -> VehicleOuterClass.VehicleType.CAR
                 VehicleType.BUS -> VehicleOuterClass.VehicleType.BUS
                 VehicleType.MOTORCYCLE -> VehicleOuterClass.VehicleType.MOTORCYCLE
+                else -> VehicleOuterClass.VehicleType.UNKNOWN
             }
 
             durationOfUseOfParkingSpotBuilder.setSeconds(vehicle.durationOfUseOfParkingSpot.seconds)
@@ -29,7 +30,7 @@ class VehicleConverter {
                 VehicleOuterClass.VehicleType.CAR -> VehicleType.CAR
                 VehicleOuterClass.VehicleType.BUS -> VehicleType.BUS
                 VehicleOuterClass.VehicleType.MOTORCYCLE -> VehicleType.MOTORCYCLE
-                else -> VehicleType.CAR
+                else -> VehicleType.UNKNOWN
             },
             durationOfUseOfParkingSpot = Duration.ofSeconds(vehicleProto.durationOfUseOfParkingSpot.seconds),
             isTicketReceived = vehicleProto.isTicketReceived

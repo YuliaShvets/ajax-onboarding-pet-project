@@ -3,9 +3,10 @@ syntax = "proto3";
 package ua.lviv.iot;
 
 enum ParkingSpotSize {
-  COMPACT = 0;
-  LARGE = 1;
-  MOTORBIKE = 2;
+  DEFAULT = 0;
+  COMPACT = 1;
+  LARGE = 2;
+  MOTORBIKE = 3;
 }
 
 message ParkingSpot {
@@ -14,11 +15,11 @@ message ParkingSpot {
 
 }
 
-message ParkingSpotResponse {
+message CreateParkingSpotResponse {
   ParkingSpot parkingSpot = 1;
 }
 
-message ParkingSpotRequest {
+message CreateParkingSpotRequest {
   ParkingSpot parkingSpot = 1;
 }
 
