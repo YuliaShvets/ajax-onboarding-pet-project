@@ -5,9 +5,10 @@ import "google/protobuf/duration.proto";
 package ua.lviv.iot;
 
 enum VehicleType {
-  CAR = 0;
-  BUS = 1;
-  MOTORCYCLE = 2;
+  UNKNOWN = 0;
+  CAR = 1;
+  BUS = 2;
+  MOTORCYCLE = 3;
 }
 
 message Vehicle {
@@ -17,11 +18,11 @@ message Vehicle {
   bool is_ticket_received = 4;
 }
 
-message VehicleRequest {
+message CreateVehicleRequest {
   Vehicle vehicle = 1;
 }
 
-message VehicleResponse {
+message CreateVehicleResponse {
   Vehicle vehicle = 1;
 }
 

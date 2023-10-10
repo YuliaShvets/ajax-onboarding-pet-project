@@ -5,11 +5,11 @@ package ua.lviv.iot;
 import "ua/lviv/iot/vehicle.proto";
 
 service VehicleGrpcService {
-  rpc createVehicle(VehicleRequest) returns (VehicleResponse);
+  rpc createVehicle(CreateVehicleRequest) returns (CreateVehicleResponse);
 
-  rpc getVehicleById(GetByIdVehicleRequest) returns (VehicleResponse);
+  rpc getVehicleById(GetByIdVehicleRequest) returns (CreateVehicleResponse);
 
-  rpc updateVehicle(UpdateVehicleRequest) returns (VehicleResponse);
+  rpc updateVehicle(UpdateVehicleRequest) returns (CreateVehicleResponse);
 
   rpc deleteVehicle(DeleteVehicleRequest) returns (DeleteVehicleResponse);
 }

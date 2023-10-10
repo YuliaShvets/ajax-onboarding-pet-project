@@ -10,18 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import ua.lviv.iot.parkingServer.kafka.EventObserver
 import ua.lviv.iot.parkingServer.model.ParkingSpot
 import ua.lviv.iot.parkingServer.service.interfaces.ParkingSpotServiceInterface
 
 @RestController
 @RequestMapping("/parkingSpot")
-class ParkingSpotController(private val parkingSpotService: ParkingSpotServiceInterface) {
+class ParkingSpotController(
+    private val parkingSpotService: ParkingSpotServiceInterface,
+    private val eventObserver: EventObserver
+) {
     @PostMapping
     fun addParkingSpot(@RequestBody parkingSpot: ParkingSpot): Mono<ParkingSpot> =
         parkingSpotService.addEntity(parkingSpot)
 
     @GetMapping
-    fun getAllParking(): Flux<ParkingSpot> = parkingSpotService.findAllEntities()
+    fun getAllParkingSpots(): Flux<ParkingSpot> {
+        eventObserver.observe()
+        return parkingSpotService.findAllEntities()
+    }
 
     @GetMapping("/{parkingSpotId}")
     fun getParkingSpotById(@PathVariable parkingSpotId: String): Mono<ParkingSpot> =

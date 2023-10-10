@@ -6,4 +6,5 @@ object NatsSubject {
     const val PARKING_DELETE = "parking.delete"
     const val PARKING_GET_BY_ID = "parking.get_by_id"
     const val PARKING_UPDATE = "parking.update"
+    const val ADDED_AVAILABLE_PARKING_SPOT = "ADDED_AVAILABLE_PARKING_SPOT"
 }

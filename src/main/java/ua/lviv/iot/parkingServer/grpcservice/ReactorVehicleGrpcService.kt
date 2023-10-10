@@ -3,12 +3,12 @@ package ua.lviv.iot.parkingServer.grpcservice
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import ua.lviv.iot.ReactorVehicleGrpcServiceGrpc
+import ua.lviv.iot.VehicleOuterClass.CreateVehicleRequest
+import ua.lviv.iot.VehicleOuterClass.CreateVehicleResponse
 import ua.lviv.iot.VehicleOuterClass.DeleteVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.DeleteVehicleResponse
 import ua.lviv.iot.VehicleOuterClass.GetByIdVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.UpdateVehicleRequest
-import ua.lviv.iot.VehicleOuterClass.VehicleRequest
-import ua.lviv.iot.VehicleOuterClass.VehicleResponse
 import ua.lviv.iot.parkingServer.converter.VehicleConverter
 import ua.lviv.iot.parkingServer.service.interfaces.VehicleServiceInterface
 
@@ -19,24 +19,24 @@ class ReactorVehicleGrpcService(
 ) : ReactorVehicleGrpcServiceGrpc.VehicleGrpcServiceImplBase() {
 
     override fun createVehicle(
-        request: Mono<VehicleRequest>,
-    ): Mono<VehicleResponse> {
+        request: Mono<CreateVehicleRequest>,
+    ): Mono<CreateVehicleResponse> {
         return request.flatMap { service.addEntity(converter.protoToVehicle(it.vehicle)) }
             .map { converter.vehicleToProto(it) }
-            .map { VehicleResponse.newBuilder().setVehicle(it).build() }
+            .map { CreateVehicleResponse.newBuilder().setVehicle(it).build() }
     }
 
     override fun getVehicleById(
         request: Mono<GetByIdVehicleRequest>,
-    ): Mono<VehicleResponse> {
+    ): Mono<CreateVehicleResponse> {
         return request.flatMap { service.findEntityById(it.vehicleId) }
             .map { converter.vehicleToProto(it) }
-            .map { VehicleResponse.newBuilder().setVehicle(it).build() }
+            .map { CreateVehicleResponse.newBuilder().setVehicle(it).build() }
     }
 
     override fun updateVehicle(
         request: Mono<UpdateVehicleRequest>,
-    ): Mono<VehicleResponse> {
+    ): Mono<CreateVehicleResponse> {
         return request.flatMap { updateRequest ->
             val vehicle = converter.protoToVehicle(updateRequest.vehicle)
             vehicle.id = updateRequest.vehicleId
@@ -44,7 +44,7 @@ class ReactorVehicleGrpcService(
             service.updateEntity(vehicle)
                 .map { updatedVehicle -> converter.vehicleToProto(updatedVehicle) }
                 .map { vehicleProto ->
-                    VehicleResponse.newBuilder()
+                    CreateVehicleResponse.newBuilder()
                         .setVehicle(vehicleProto)
                         .build()
                 }
