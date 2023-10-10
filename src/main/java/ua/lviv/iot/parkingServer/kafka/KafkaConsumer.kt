@@ -13,6 +13,7 @@ import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate
 import reactor.kafka.receiver.ReceiverOptions
 import ua.lviv.iot.ParkingSpotOuterClass.CreateParkingSpotRequest
+import ua.lviv.iot.parkingServer.exception.CannotParseException
 
 @EnableKafka
 @Configuration
@@ -45,14 +46,8 @@ class KafkaConsumer {
 
 class ProtobufDeserializer : Deserializer<GeneratedMessageV3> {
 
-    private val topicToParserMap = HashMap<String, Parser<CreateParkingSpotRequest>>()
-
-    private val parser: Parser<CreateParkingSpotRequest> =
-        CreateParkingSpotRequest.parser()
-
-    override fun deserialize(topic: String, data: ByteArray): GeneratedMessageV3? {
-        topicToParserMap[topic] = parser
-        val parser = topicToParserMap[topic]
-        return parser?.parseFrom(data)
+    private val topicToParserMap = mapOf("ADDED_AVAILABLE_PARKING_SPOT" to CreateParkingSpotRequest.parser())
+    override fun deserialize(topic: String, data: ByteArray): GeneratedMessageV3 {
+        return topicToParserMap[topic]?.parseFrom(data) ?: throw CannotParseException("Cannot parse")
     }
 }
