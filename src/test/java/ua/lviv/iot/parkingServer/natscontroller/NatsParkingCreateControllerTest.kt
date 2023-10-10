@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import ua.lviv.iot.ParkingOuterClass
 import ua.lviv.iot.ParkingOuterClass.CreateParkingRequest
 import ua.lviv.iot.ParkingOuterClass.CreateParkingResponse
 import ua.lviv.iot.nats.NatsSubject
