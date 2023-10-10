@@ -30,7 +30,7 @@ class KafkaProducer {
 }
 
 class ProtobufSerializer<T : GeneratedMessageV3> : Serializer<T> {
-    override fun serialize(topic: String?, data: T): ByteArray {
+    override fun serialize(topic: String, data: T): ByteArray {
         return data.toByteArray()
     }
 }

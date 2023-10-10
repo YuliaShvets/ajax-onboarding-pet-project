@@ -1,5 +1,7 @@
 package ua.lviv.iot.parkingServer.kafka
 
+import com.google.protobuf.GeneratedMessageV3
+import com.google.protobuf.Parser
 import java.util.*
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.Deserializer
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate
 import reactor.kafka.receiver.ReceiverOptions
+import ua.lviv.iot.ParkingSpotOuterClass.CreateParkingSpotRequest
 
 @EnableKafka
 @Configuration
@@ -19,8 +22,8 @@ class KafkaConsumer {
     private lateinit var kafkaAddress: String
 
     @Bean
-    fun kafkaConsumerOptions(): ReceiverOptions<String, ByteArray> {
-        val basicReceiverOptions: ReceiverOptions<String, ByteArray> =
+    fun kafkaConsumerOptions(): ReceiverOptions<String, GeneratedMessageV3> {
+        val basicReceiverOptions: ReceiverOptions<String, GeneratedMessageV3> =
             ReceiverOptions.create(
                 mapOf(
                     Pair(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaAddress),
@@ -34,16 +37,22 @@ class KafkaConsumer {
 
     @Bean
     fun kafkaConsumerTemplate(
-        kafkaReceiverOptions: ReceiverOptions<String, ByteArray>
-    ): ReactiveKafkaConsumerTemplate<String, ByteArray> {
+        kafkaReceiverOptions: ReceiverOptions<String, GeneratedMessageV3>
+    ): ReactiveKafkaConsumerTemplate<String, GeneratedMessageV3> {
         return ReactiveKafkaConsumerTemplate(kafkaConsumerOptions())
     }
 }
 
-class ProtobufDeserializer() : Deserializer<ByteArray> {
+class ProtobufDeserializer : Deserializer<GeneratedMessageV3> {
 
-    override fun deserialize(topic: String, data: ByteArray): ByteArray {
-        return data
+    private val topicToParserMap = HashMap<String, Parser<CreateParkingSpotRequest>>()
+
+    private val parser: Parser<CreateParkingSpotRequest> =
+        CreateParkingSpotRequest.parser()
+
+    override fun deserialize(topic: String, data: ByteArray): GeneratedMessageV3? {
+        topicToParserMap[topic] = parser
+        val parser = topicToParserMap[topic]
+        return parser?.parseFrom(data)
     }
-
 }
