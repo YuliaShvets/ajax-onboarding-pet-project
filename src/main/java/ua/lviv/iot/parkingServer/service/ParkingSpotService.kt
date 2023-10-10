@@ -24,24 +24,6 @@ class ParkingSpotService(
     override fun findEntityById(id: String): Mono<ParkingSpot> = parkingSpotRepository.findById(id)
         .switchIfEmpty(Mono.error(EntityNotFoundException("Parking spot with id=$id not found")))
 
-//    override fun addEntity(entity: ParkingSpot): Mono<ParkingSpot> {
-//        return parkingSpotRepository.save(entity)
-//            .flatMap {
-//                if (it.isAvailable) {
-//                    parkingSpotKafkaProducer.send(
-//                        "ADDED_AVAILABLE_PARKING_SPOT",
-//                        parkingSpotConverter.parkingSpotToProtoResponse(it)
-//                    )
-//                        .thenReturn(it)
-//                        .doOnSuccess {
-//                            println("Publish event to Kafka - ADDED_AVAILABLE_PARKING_SPOT")
-//                        }
-//                } else {
-//                    Mono.just(it)
-//                }
-//            }
-//    }
-
     override fun addEntity(entity: ParkingSpot): Mono<ParkingSpot> {
         return parkingSpotRepository.save(entity)
             .flatMap { savedEntity ->
@@ -59,7 +41,6 @@ class ParkingSpotService(
                 }
             }
     }
-
 
     override fun updateEntity(entity: ParkingSpot): Mono<ParkingSpot> {
         return parkingSpotRepository.update(entity)

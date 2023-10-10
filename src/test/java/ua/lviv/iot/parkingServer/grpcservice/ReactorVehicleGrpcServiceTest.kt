@@ -15,8 +15,8 @@ import ua.lviv.iot.VehicleOuterClass
 import ua.lviv.iot.VehicleOuterClass.DeleteVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.GetByIdVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.UpdateVehicleRequest
-import ua.lviv.iot.VehicleOuterClass.VehicleRequest
-import ua.lviv.iot.VehicleOuterClass.VehicleResponse
+import ua.lviv.iot.VehicleOuterClass.CreateVehicleRequest
+import ua.lviv.iot.VehicleOuterClass.CreateVehicleResponse
 import ua.lviv.iot.parkingServer.converter.VehicleConverter
 import ua.lviv.iot.parkingServer.model.Vehicle
 import ua.lviv.iot.parkingServer.model.enums.VehicleType
@@ -64,12 +64,12 @@ class ReactorVehicleGrpcServiceTest {
 
     @Test
     fun createVehicle() {
-        val expected = VehicleResponse.newBuilder()
+        val expected = CreateVehicleResponse.newBuilder()
             .setVehicle(vehicleConverter.vehicleToProto(firstTestVehicle))
             .build()
 
         val request = Mono.just(
-            VehicleRequest.newBuilder()
+           CreateVehicleRequest.newBuilder()
                 .setVehicle(vehicleConverter.vehicleToProto(firstTestVehicle))
                 .build()
         )
@@ -86,7 +86,7 @@ class ReactorVehicleGrpcServiceTest {
     @Test
     fun getVehicleById() {
         vehicleRepository.save(firstTestVehicle).block()
-        val expected = VehicleResponse.newBuilder()
+        val expected = CreateVehicleResponse.newBuilder()
             .setVehicle(vehicleConverter.vehicleToProto(firstTestVehicle))
             .build()
 
@@ -115,7 +115,7 @@ class ReactorVehicleGrpcServiceTest {
             .vehicleToProto(firstTestVehicle)
 
         val expected =
-            VehicleResponse
+            CreateVehicleResponse
                 .newBuilder()
                 .setVehicle(vehicle)
                 .build()

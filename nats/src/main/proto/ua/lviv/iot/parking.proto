@@ -8,11 +8,11 @@ message Parking {
   int32 countOfParkingSpots = 3;
 }
 
-message ParkingResponse {
+message CreateParkingResponse {
   Parking parking = 1;
 }
 
-message  ParkingRequest {
+message  CreateParkingRequest {
   Parking parking = 1;
 }
 

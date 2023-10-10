@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ua.lviv.iot.ParkingOuterClass
+import ua.lviv.iot.ParkingOuterClass.CreateParkingRequest
+import ua.lviv.iot.ParkingOuterClass.CreateParkingResponse
 import ua.lviv.iot.nats.NatsSubject
 import ua.lviv.iot.parkingServer.converter.ParkingConverter
 import ua.lviv.iot.parkingServer.model.Parking
@@ -23,11 +25,11 @@ class NatsParkingCreateControllerTest {
     @Test
     fun generateReplyForNatsRequest() {
         val parking = Parking("Kyiv", "Forum", 123)
-        val expected = ParkingOuterClass.ParkingRequest.newBuilder()
+        val expected = CreateParkingRequest.newBuilder()
             .setParking(parkingConverter.parkingToProto(parking))
             .build()
 
-        val actual = ParkingOuterClass.ParkingResponse.parseFrom(
+        val actual = CreateParkingResponse.parseFrom(
             connection
                 .requestWithTimeout(
                     NatsSubject.PARKING_ADD,

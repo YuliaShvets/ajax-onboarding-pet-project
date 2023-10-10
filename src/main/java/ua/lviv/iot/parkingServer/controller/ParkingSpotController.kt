@@ -27,7 +27,7 @@ class ParkingSpotController(
     @GetMapping
     fun getAllParkingSpots(): Flux<ParkingSpot> {
         eventObserver.observe()
-        return  parkingSpotService.findAllEntities()
+        return parkingSpotService.findAllEntities()
     }
 
     @GetMapping("/{parkingSpotId}")

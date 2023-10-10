@@ -5,5 +5,5 @@ package ua.lviv.iot;
 import "ua/lviv/iot/parking_spot.proto";
 
 service KafkaParkingSpotService {
-  rpc createParkingSpot (stream ParkingSpotRequest) returns (stream ParkingSpotResponse);
+  rpc createParkingSpot (stream CreateParkingSpotRequest) returns (stream CreateParkingSpotResponse);
 }
