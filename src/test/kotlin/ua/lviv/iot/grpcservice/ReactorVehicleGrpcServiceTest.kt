@@ -13,7 +13,6 @@ import ua.lviv.iot.ReactorVehicleGrpcServiceGrpc
 import ua.lviv.iot.ReactorVehicleGrpcServiceGrpc.ReactorVehicleGrpcServiceStub
 import ua.lviv.iot.VehicleOuterClass
 import ua.lviv.iot.VehicleOuterClass.DeleteVehicleRequest
-import ua.lviv.iot.VehicleOuterClass.GetByIdVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.UpdateVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.CreateVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.CreateVehicleResponse

@@ -11,7 +11,6 @@ import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
 import ua.lviv.iot.application.repository.VehicleRepositoryOutPort
 import ua.lviv.iot.application.service.VehicleService
-import ua.lviv.iot.application.service.VehicleServiceInPort
 import ua.lviv.iot.domain.Vehicle
 import ua.lviv.iot.domain.enum.VehicleType
 
