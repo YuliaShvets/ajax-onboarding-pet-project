@@ -1,4 +1,4 @@
-package ua.lviv.iot.application.proto.converter
+package ua.lviv.iot.infrastructure.converter.proto
 
 import ua.lviv.iot.domain.Parking
 

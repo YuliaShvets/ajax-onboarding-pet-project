@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.lviv.iot.ParkingSpotOuterClass
-import ua.lviv.iot.ReactorKafkaParkingSpotServiceGrpc
+import ua.lviv.iot.ReactorParkingSpotServiceGrpc
 
 @Component
 class EventObserver(private val grpcChannel: ManagedChannel) {
 
-    private lateinit var stub: ReactorKafkaParkingSpotServiceGrpc.ReactorKafkaParkingSpotServiceStub
+    private lateinit var stub: ReactorParkingSpotServiceGrpc.ReactorParkingSpotServiceStub
 
     fun observe() {
-        stub = ReactorKafkaParkingSpotServiceGrpc.newReactorStub(grpcChannel)
+        stub = ReactorParkingSpotServiceGrpc.newReactorStub(grpcChannel)
         stub.createParkingSpot(Flux.from(Mono.just(ParkingSpotOuterClass.CreateParkingSpotRequest.getDefaultInstance())))
             .doOnNext { println(it) }
             .subscribe()

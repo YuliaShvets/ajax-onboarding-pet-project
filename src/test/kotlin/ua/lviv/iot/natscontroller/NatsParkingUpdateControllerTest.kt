@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ua.lviv.iot.ParkingOuterClass
 import ua.lviv.iot.ParkingOuterClass.CreateParkingResponse
-import ua.lviv.iot.application.proto.converter.ParkingConverter
+import ua.lviv.iot.infrastructure.converter.proto.ParkingConverter
 import ua.lviv.iot.application.repository.ParkingRepositoryOutPort
 import ua.lviv.iot.domain.Parking
 import ua.lviv.iot.nats.NatsSubject
