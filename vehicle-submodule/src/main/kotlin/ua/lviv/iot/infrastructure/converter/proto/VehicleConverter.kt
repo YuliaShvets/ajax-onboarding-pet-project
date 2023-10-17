@@ -1,4 +1,4 @@
-package ua.lviv.iot.application.proto.converter
+package ua.lviv.iot.infrastructure.converter.proto
 
 import java.time.Duration
 import org.springframework.stereotype.Component

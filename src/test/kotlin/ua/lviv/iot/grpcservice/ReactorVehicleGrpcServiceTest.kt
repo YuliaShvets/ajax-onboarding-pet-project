@@ -16,7 +16,7 @@ import ua.lviv.iot.VehicleOuterClass.DeleteVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.UpdateVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.CreateVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.CreateVehicleResponse
-import ua.lviv.iot.application.proto.converter.VehicleConverter
+import ua.lviv.iot.infrastructure.converter.proto.VehicleConverter
 import ua.lviv.iot.application.repository.VehicleRepositoryOutPort
 import ua.lviv.iot.domain.Vehicle
 import ua.lviv.iot.domain.enum.VehicleType

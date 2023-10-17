@@ -1,15 +1,14 @@
 package ua.lviv.iot.infrastructure.database.repository
 
 import ua.lviv.iot.application.repository.ParkingRepositoryOutPort
-import com.mongodb.client.result.DeleteResult
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.lviv.iot.application.mapper.domainToEntity
-import ua.lviv.iot.application.mapper.entityToDomain
+import ua.lviv.iot.infrastructure.mapper.domainToEntity
+import ua.lviv.iot.infrastructure.mapper.entityToDomain
 import ua.lviv.iot.domain.Parking
 import ua.lviv.iot.infrastructure.database.model.ParkingEntity
 
@@ -38,10 +37,10 @@ class ParkingRepository(val reactiveMongoTemplate: ReactiveMongoTemplate) : Park
             .map { it.entityToDomain() }
     }
 
-    override fun deleteById(id: String): Mono<DeleteResult> {
+    override fun deleteById(id: String): Mono<Void> {
         val query = Query()
             .addCriteria(Criteria.where("_id").`is`(id))
-        return reactiveMongoTemplate.remove(query, ParkingEntity::class.java)
+        return reactiveMongoTemplate.remove(query, ParkingEntity::class.java).then()
     }
 
     override fun findParkingByLocation(location: String): Flux<Parking> {

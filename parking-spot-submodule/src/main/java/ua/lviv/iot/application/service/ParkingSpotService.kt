@@ -1,7 +1,6 @@
 package ua.lviv.iot.application.service
 
 import com.google.protobuf.GeneratedMessageV3
-import com.mongodb.client.result.DeleteResult
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux

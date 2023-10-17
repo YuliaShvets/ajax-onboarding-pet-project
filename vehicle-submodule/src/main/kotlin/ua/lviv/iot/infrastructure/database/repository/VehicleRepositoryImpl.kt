@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.lviv.iot.application.mapper.domainToEntity
-import ua.lviv.iot.application.mapper.entityToDomain
+import ua.lviv.iot.infrastructure.mapper.domainToEntity
+import ua.lviv.iot.infrastructure.mapper.entityToDomain
 import ua.lviv.iot.application.repository.VehicleRepositoryOutPort
 import ua.lviv.iot.domain.Vehicle
 import ua.lviv.iot.infrastructure.database.model.VehicleEntity
@@ -38,10 +38,10 @@ class VehicleRepositoryImpl(private val reactiveMongoTemplate: ReactiveMongoTemp
             .map { it.entityToDomain() }
     }
 
-    override fun deleteById(id: String): Mono<DeleteResult> {
+    override fun deleteById(id: String): Mono<Void> {
         val query = Query()
             .addCriteria(Criteria.where("_id").`is`(id))
-        return reactiveMongoTemplate.remove(query, VehicleEntity::class.java)
+        return reactiveMongoTemplate.remove(query, VehicleEntity::class.java).then()
     }
 
     override fun findVehicleByNumber(number: String): Mono<Vehicle> {

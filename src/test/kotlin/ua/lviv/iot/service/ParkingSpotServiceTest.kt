@@ -10,7 +10,7 @@ import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
-import ua.lviv.iot.application.proto.converter.ParkingSpotConverter
+import ua.lviv.iot.infrastructure.converter.proto.ParkingSpotConverter
 import ua.lviv.iot.application.repository.ParkingSpotRepositoryOutPort
 import ua.lviv.iot.application.service.ParkingSpotService
 import ua.lviv.iot.domain.ParkingSpot

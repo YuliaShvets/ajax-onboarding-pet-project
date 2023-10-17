@@ -1,4 +1,4 @@
-package ua.lviv.iot.application.mapper
+package ua.lviv.iot.infrastructure.mapper
 
 import ua.lviv.iot.domain.Vehicle
 import ua.lviv.iot.infrastructure.database.model.VehicleEntity

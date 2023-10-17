@@ -1,6 +1,5 @@
 package ua.lviv.iot.application.service
 
-import com.mongodb.client.result.DeleteResult
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.lviv.iot.domain.Vehicle

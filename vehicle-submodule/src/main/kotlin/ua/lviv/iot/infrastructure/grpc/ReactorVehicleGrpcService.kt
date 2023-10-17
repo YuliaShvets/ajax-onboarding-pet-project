@@ -9,12 +9,12 @@ import ua.lviv.iot.VehicleOuterClass.DeleteVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.DeleteVehicleResponse
 import ua.lviv.iot.VehicleOuterClass.GetByIdVehicleRequest
 import ua.lviv.iot.VehicleOuterClass.UpdateVehicleRequest
-import ua.lviv.iot.application.proto.converter.VehicleConverter
-import ua.lviv.iot.application.service.VehicleServiceInPort
+import ua.lviv.iot.infrastructure.converter.proto.VehicleConverter
+import ua.lviv.iot.application.service.VehicleInPort
 
 @Component
 class ReactorVehicleGrpcService(
-    private val service: VehicleServiceInPort,
+    private val service: VehicleInPort,
     private val converter: VehicleConverter
 ) : ReactorVehicleGrpcServiceGrpc.VehicleGrpcServiceImplBase() {
 
