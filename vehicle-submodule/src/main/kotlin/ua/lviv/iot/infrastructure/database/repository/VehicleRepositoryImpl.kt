@@ -1,6 +1,5 @@
 package ua.lviv.iot.infrastructure.database.repository
 
-import com.mongodb.client.result.DeleteResult
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query

@@ -56,6 +56,6 @@ class ReactorVehicleGrpcService(
         request: Mono<DeleteVehicleRequest>,
     ): Mono<DeleteVehicleResponse> {
         return request.flatMap { service.deleteEntity(it.vehicleId) }
-            .map { DeleteVehicleResponse.newBuilder().build() }
+            .then(Mono.fromCallable { DeleteVehicleResponse.newBuilder().build() })
     }
 }
