@@ -5,7 +5,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.lviv.iot.domain.Vehicle
 
-interface VehicleServiceInPort {
+interface VehicleInPort {
 
     fun findAllEntities(): Flux<Vehicle>
 
@@ -15,7 +15,7 @@ interface VehicleServiceInPort {
 
     fun updateEntity(entity: Vehicle): Mono<Vehicle>
 
-    fun deleteEntity(id: String): Mono<DeleteResult>
+    fun deleteEntity(id: String): Mono<Void>
 
     fun findVehicleByNumber(number: String): Mono<Vehicle>
 }

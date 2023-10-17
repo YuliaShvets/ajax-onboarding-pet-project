@@ -6,7 +6,7 @@ import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.lviv.iot.application.proto.converter.ParkingSpotConverter
+import ua.lviv.iot.infrastructure.converter.proto.ParkingSpotConverter
 import ua.lviv.iot.application.repository.ParkingSpotRepositoryOutPort
 import ua.lviv.iot.domain.ParkingSpot
 import ua.lviv.iot.exception.EntityNotFoundException
@@ -16,7 +16,7 @@ class ParkingSpotService(
     private val parkingSpotRepository: ParkingSpotRepositoryOutPort,
     private val parkingSpotConverter: ParkingSpotConverter,
     private val parkingSpotKafkaProducer: ReactiveKafkaProducerTemplate<String, GeneratedMessageV3>
-) : ParkingSpotServiceInPort {
+) : ParkingSpotInPort {
 
     override fun findAllEntities(): Flux<ParkingSpot> = parkingSpotRepository.findAll()
 
@@ -45,7 +45,7 @@ class ParkingSpotService(
         return parkingSpotRepository.update(entity)
     }
 
-    override fun deleteEntity(id: String): Mono<DeleteResult> = parkingSpotRepository.deleteById(id)
+    override fun deleteEntity(id: String): Mono<Void> = parkingSpotRepository.deleteById(id)
 
     override fun findParkingSpotByAvailability(isAvailable: Boolean): Flux<ParkingSpot> {
         return parkingSpotRepository.findParkingSpotByAvailability(isAvailable)

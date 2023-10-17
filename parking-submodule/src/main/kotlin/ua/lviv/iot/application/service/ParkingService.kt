@@ -1,7 +1,6 @@
 package ua.lviv.iot.application.service
 
 import ua.lviv.iot.application.repository.ParkingRepositoryOutPort
-import com.mongodb.client.result.DeleteResult
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -13,7 +12,7 @@ import ua.lviv.iot.domain.Parking
 @TrackMetrics
 class ParkingService(
     private val parkingRepository: ParkingRepositoryOutPort
-) : ParkingServiceInPort {
+) : ParkingInPort {
 
     override fun findAllEntities(): Flux<Parking> = parkingRepository.findAll()
 
@@ -26,7 +25,7 @@ class ParkingService(
         return parkingRepository.update(entity)
     }
 
-    override fun deleteEntity(id: String): Mono<DeleteResult> = parkingRepository.deleteById(id)
+    override fun deleteEntity(id: String): Mono<Void> = parkingRepository.deleteById(id)
 
     override fun findParkingByLocation(location: String): Flux<Parking> {
         return parkingRepository.findParkingByLocation(location)

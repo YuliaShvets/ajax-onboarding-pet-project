@@ -1,11 +1,10 @@
 package ua.lviv.iot.application.service
 
-import com.mongodb.client.result.DeleteResult
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.lviv.iot.domain.Parking
 
-interface ParkingServiceInPort  {
+interface ParkingInPort  {
     fun findAllEntities(): Flux<Parking>
 
     fun findEntityById(id: String): Mono<Parking>
@@ -14,7 +13,7 @@ interface ParkingServiceInPort  {
 
     fun updateEntity(entity: Parking): Mono<Parking>
 
-    fun deleteEntity(id: String) : Mono<DeleteResult>
+    fun deleteEntity(id: String) : Mono<Void>
 
     fun findParkingByLocation(location: String): Flux<Parking>
 

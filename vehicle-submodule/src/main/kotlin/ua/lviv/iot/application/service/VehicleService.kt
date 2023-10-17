@@ -11,7 +11,7 @@ import ua.lviv.iot.exception.EntityNotFoundException
 @Service
 class VehicleService(
     private val vehicleRepository: VehicleRepositoryOutPort
-) : VehicleServiceInPort {
+) : VehicleInPort {
 
     override fun findAllEntities(): Flux<Vehicle> = vehicleRepository.findAll()
 
@@ -25,7 +25,7 @@ class VehicleService(
         return vehicleRepository.update(entity)
     }
 
-    override fun deleteEntity(id: String): Mono<DeleteResult> = vehicleRepository.deleteById(id)
+    override fun deleteEntity(id: String): Mono<Void> = vehicleRepository.deleteById(id)
 
     override fun findVehicleByNumber(number: String): Mono<Vehicle> {
         return vehicleRepository.findVehicleByNumber(number)

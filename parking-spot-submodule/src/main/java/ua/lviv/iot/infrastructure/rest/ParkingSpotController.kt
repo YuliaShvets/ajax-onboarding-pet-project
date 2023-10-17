@@ -10,41 +10,41 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.lviv.iot.application.service.ParkingSpotServiceInPort
+import ua.lviv.iot.application.service.ParkingSpotInPort
 import ua.lviv.iot.domain.ParkingSpot
 import ua.lviv.iot.infrastructure.grpc.observer.EventObserver
 
 @RestController
 @RequestMapping("/parkingSpot")
 class ParkingSpotController(
-    private val parkingSpotService: ParkingSpotServiceInPort,
+    private val parkingSpotInPort: ParkingSpotInPort,
     private val eventObserver: EventObserver
 ) {
     @PostMapping
     fun addParkingSpot(@RequestBody parkingSpot: ParkingSpot): Mono<ParkingSpot> =
-        parkingSpotService.addEntity(parkingSpot)
+        parkingSpotInPort.addEntity(parkingSpot)
 
     @GetMapping
     fun getAllParkingSpots(): Flux<ParkingSpot> {
         eventObserver.observe()
-        return parkingSpotService.findAllEntities()
+        return parkingSpotInPort.findAllEntities()
     }
 
     @GetMapping("/{parkingSpotId}")
     fun getParkingSpotById(@PathVariable parkingSpotId: String): Mono<ParkingSpot> =
-        parkingSpotService.findEntityById(parkingSpotId)
+        parkingSpotInPort.findEntityById(parkingSpotId)
 
     @PutMapping
     fun updateParkingSpot(@RequestBody parkingSpot: ParkingSpot): Mono<ParkingSpot> =
-        parkingSpotService.updateEntity(parkingSpot)
+        parkingSpotInPort.updateEntity(parkingSpot)
 
     @DeleteMapping("/{parkingSpotId}")
     fun deleteParkingSpot(@PathVariable parkingSpotId: String) =
-        parkingSpotService.deleteEntity(parkingSpotId)
+        parkingSpotInPort.deleteEntity(parkingSpotId)
 
     @GetMapping("/{isAvailable}")
     fun findParkingSpotByAvailability(@PathVariable isAvailable: Boolean): Flux<ParkingSpot> {
-        return parkingSpotService.findParkingSpotByAvailability(isAvailable)
+        return parkingSpotInPort.findParkingSpotByAvailability(isAvailable)
     }
 
 }
