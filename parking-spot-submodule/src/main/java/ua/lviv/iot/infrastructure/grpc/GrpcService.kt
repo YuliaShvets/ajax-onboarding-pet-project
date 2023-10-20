@@ -6,21 +6,21 @@ import reactor.core.publisher.Flux
 import ua.lviv.iot.ParkingSpotOuterClass.CreateParkingSpotRequest
 import ua.lviv.iot.ParkingSpotOuterClass.CreateParkingSpotResponse
 import ua.lviv.iot.ReactorParkingSpotServiceGrpc
-import ua.lviv.iot.infrastructure.nats.NatsListener
+import ua.lviv.iot.infrastructure.nats.MessageBusListener
 
 @Component
 class GrpcService(
-    val natsListener: NatsListener
+    val messageBusListener: MessageBusListener
 ) : ReactorParkingSpotServiceGrpc.ParkingSpotServiceImplBase() {
 
     @PostConstruct
     fun listenToEvents() {
-        natsListener.listenToEvents()
+        messageBusListener.listenToEvents()
     }
 
     override fun createParkingSpot(
         request: Flux<CreateParkingSpotRequest>
     ): Flux<CreateParkingSpotResponse> {
-        return natsListener.responseSink.asFlux()
+        return messageBusListener.responseSink.asFlux()
     }
 }

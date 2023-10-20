@@ -7,9 +7,9 @@ import ua.lviv.iot.ParkingSpotOuterClass
 import ua.lviv.iot.nats.NatsSubject
 
 @Component
-class NatsListenerImpl(
+class MessageBusListenerImpl(
     private val connection: Connection,
-) : NatsListener {
+) : MessageBusListener {
 
     override val responseSink: Sinks.Many<ParkingSpotOuterClass.CreateParkingSpotResponse> =
         Sinks.many().multicast().onBackpressureBuffer()
