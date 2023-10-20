@@ -24,7 +24,7 @@ class VehicleService(
         return vehicleRepository.update(entity)
     }
 
-    override fun deleteEntity(id: String): Mono<Void> = vehicleRepository.deleteById(id)
+    override fun deleteEntity(id: String): Mono<Unit> = vehicleRepository.deleteById(id)
 
     override fun findVehicleByNumber(number: String): Mono<Vehicle> {
         return vehicleRepository.findVehicleByNumber(number)

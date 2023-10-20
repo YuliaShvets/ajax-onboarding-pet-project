@@ -14,7 +14,7 @@ interface VehicleInPort {
 
     fun updateEntity(entity: Vehicle): Mono<Vehicle>
 
-    fun deleteEntity(id: String): Mono<Void>
+    fun deleteEntity(id: String): Mono<Unit>
 
     fun findVehicleByNumber(number: String): Mono<Vehicle>
 }

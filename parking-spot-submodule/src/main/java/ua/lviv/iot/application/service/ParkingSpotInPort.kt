@@ -14,7 +14,7 @@ interface ParkingSpotInPort {
 
     fun updateEntity(entity: ParkingSpot): Mono<ParkingSpot>
 
-    fun deleteEntity(id : String): Mono<Void>
+    fun deleteEntity(id : String): Mono<Unit>
 
     fun findParkingSpotByAvailability(isAvailable : Boolean) : Flux<ParkingSpot>
 }

@@ -44,7 +44,7 @@ class ParkingSpotService(
         return parkingSpotRepository.update(entity)
     }
 
-    override fun deleteEntity(id: String): Mono<Void> = parkingSpotRepository.deleteById(id)
+    override fun deleteEntity(id: String): Mono<Unit> = parkingSpotRepository.deleteById(id)
 
     override fun findParkingSpotByAvailability(isAvailable: Boolean): Flux<ParkingSpot> {
         return parkingSpotRepository.findParkingSpotByAvailability(isAvailable)

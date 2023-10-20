@@ -14,7 +14,7 @@ interface VehicleRepositoryOutPort  {
 
     fun update(entity: Vehicle): Mono<Vehicle>
 
-    fun deleteById(id : String): Mono<Void>
+    fun deleteById(id : String): Mono<Unit>
 
     fun findVehicleByNumber(number: String) : Mono<Vehicle>
 }

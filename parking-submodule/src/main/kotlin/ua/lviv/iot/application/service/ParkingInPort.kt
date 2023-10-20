@@ -13,7 +13,7 @@ interface ParkingInPort  {
 
     fun updateEntity(entity: Parking): Mono<Parking>
 
-    fun deleteEntity(id: String) : Mono<Void>
+    fun deleteEntity(id: String) : Mono<Unit>
 
     fun findParkingByLocation(location: String): Flux<Parking>
 

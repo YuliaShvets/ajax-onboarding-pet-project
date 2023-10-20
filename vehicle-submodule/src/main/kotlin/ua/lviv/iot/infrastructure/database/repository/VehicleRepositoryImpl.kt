@@ -37,10 +37,10 @@ class VehicleRepositoryImpl(private val reactiveMongoTemplate: ReactiveMongoTemp
             .map { it.entityToDomain() }
     }
 
-    override fun deleteById(id: String): Mono<Void> {
+    override fun deleteById(id: String): Mono<Unit> {
         val query = Query()
             .addCriteria(Criteria.where("_id").`is`(id))
-        return reactiveMongoTemplate.remove(query, VehicleEntity::class.java).then()
+        return reactiveMongoTemplate.remove(query, VehicleEntity::class.java).map { }
     }
 
     override fun findVehicleByNumber(number: String): Mono<Vehicle> {

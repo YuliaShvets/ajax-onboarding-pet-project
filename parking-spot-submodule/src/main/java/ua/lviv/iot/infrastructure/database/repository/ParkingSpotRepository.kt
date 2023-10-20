@@ -37,10 +37,10 @@ class ParkingSpotRepository(private val reactiveMongoTemplate: ReactiveMongoTemp
             .map { it.entityToDomain() }
     }
 
-    override fun deleteById(id: String): Mono<Void> {
+    override fun deleteById(id: String): Mono<Unit> {
         val query = Query()
             .addCriteria(Criteria.where("_id").`is`(id))
-        return reactiveMongoTemplate.remove(query, ParkingSpotEntity::class.java).then()
+        return reactiveMongoTemplate.remove(query, ParkingSpotEntity::class.java).map { }
     }
 
     override fun findParkingSpotByAvailability(isAvailable: Boolean): Flux<ParkingSpot> {

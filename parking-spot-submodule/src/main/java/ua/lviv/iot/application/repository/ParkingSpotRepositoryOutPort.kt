@@ -14,7 +14,7 @@ interface ParkingSpotRepositoryOutPort  {
 
     fun update(entity: ParkingSpot): Mono<ParkingSpot>
 
-    fun deleteById(id : String): Mono<Void>
+    fun deleteById(id : String): Mono<Unit>
 
     fun findParkingSpotByAvailability(isAvailable : Boolean) : Flux<ParkingSpot>
 }
