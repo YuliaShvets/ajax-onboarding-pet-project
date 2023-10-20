@@ -4,3 +4,7 @@ plugins {
 rootProject.name = "ParkingServer"
 
 include("nats")
+include("parking-submodule")
+include("common-submodule")
+include("vehicle-submodule")
+include("parking-spot-submodule")
