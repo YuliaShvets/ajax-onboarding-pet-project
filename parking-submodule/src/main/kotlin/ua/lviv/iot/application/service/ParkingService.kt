@@ -5,19 +5,22 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.lviv.iot.config.bpp.annotation.TrackMetrics
-import ua.lviv.iot.exception.EntityNotFoundException
 import ua.lviv.iot.domain.Parking
+import ua.lviv.iot.exception.EntityNotFoundException
 
 @Service
 @TrackMetrics
 class ParkingService(
-    private val parkingRepository: ParkingRepositoryOutPort
+    private val parkingRepository: ParkingRepositoryOutPort,
 ) : ParkingInPort {
 
     override fun findAllEntities(): Flux<Parking> = parkingRepository.findAll()
 
-    override fun findEntityById(id: String): Mono<Parking> = parkingRepository.findById(id)
-        .switchIfEmpty(Mono.error(EntityNotFoundException("Parking with id=$id not found")))
+    override fun findEntityById(id: String): Mono<Parking> {
+        return parkingRepository.findById(id)
+            .switchIfEmpty(Mono.error(EntityNotFoundException("Parking spot with id=$id not found")))
+
+    }
 
     override fun addEntity(entity: Parking): Mono<Parking> = parkingRepository.save(entity)
 
@@ -25,7 +28,7 @@ class ParkingService(
         return parkingRepository.update(entity)
     }
 
-    override fun deleteEntity(id: String): Mono<Void> = parkingRepository.deleteById(id)
+    override fun deleteEntity(id: String): Mono<Unit> = parkingRepository.deleteById(id)
 
     override fun findParkingByLocation(location: String): Flux<Parking> {
         return parkingRepository.findParkingByLocation(location)
