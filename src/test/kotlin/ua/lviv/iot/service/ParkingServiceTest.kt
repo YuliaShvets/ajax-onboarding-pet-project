@@ -8,15 +8,15 @@ import org.springframework.boot.test.context.SpringBootTest
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
+import ua.lviv.iot.application.repository.ParkingRepositoryOutPort
 import ua.lviv.iot.application.service.ParkingService
 import ua.lviv.iot.domain.Parking
-import ua.lviv.iot.infrastructure.database.repository.ParkingRepository
 
 @SpringBootTest
 class ParkingServiceTest {
 
     @Mock
-    lateinit var parkingRepository: ParkingRepository
+    lateinit var parkingRepository: ParkingRepositoryOutPort
 
     @InjectMocks
     lateinit var parkingService: ParkingService
@@ -42,7 +42,6 @@ class ParkingServiceTest {
     fun findEntityById() {
         val parking = Parking("6512ea250ca2fc0f9ec2738b", "Lviv", "Forum", 123)
         `when`(parking.id?.let { parkingRepository.findById(it) }).thenReturn(Mono.just(parking))
-
         val resultMono = parking.id?.let { parkingService.findEntityById(it) }
 
         if (resultMono != null) {
